@@ -9,7 +9,12 @@ var apiRoutes         = require('./routes/api.js');
 var fccTestingRoutes  = require('./routes/fcctesting.js');
 var runner            = require('./test-runner');
 
+const helmet = require('helmet')
+
 var app = express();
+
+app.use(helmet());
+app.use(helmet.dnsPrefetchControl());
 
 app.use('/public', express.static(process.cwd() + '/public'));
 
