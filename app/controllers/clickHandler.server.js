@@ -38,25 +38,26 @@ function ClickHandler() {
     console.log('createThreads', req.body)
     Threads
       .findOneAndUpdate({board: req.body.board})
-      .sort({'content.thread_id': -1})
+      //.sort({'content.thread_id': -1})
       .exec( (err, threads) => {
       if(err) throw err;
       if(!threads) {
         let board = new Threads();
         
         board.board = req.body.board;
-        board.content.thread_id = '0001';
-        board.content.text = req.body.text;
-        board.content.created_on = new Date().toString();
-        board.content.bumped_on = board.content.created_on;
-        board.content.reported = false;
-        board.content.delete_password = req.body.delete_password;
-        board.content.replies = [];
+        board.thread_id = 1;
+        board.text = req.body.text;
+        board.created_on = new Date().toString();
+        board.bumped_on = board.created_on;
+        board.reported = false;
+        board.delete_password = req.body.delete_password;
+        board.replies = [];
+        board.replycount = board.replies.length;
         
-        // board.save( (err, success) => {
-        //   if(err) throw err;
-        //   console.log(success)
-        // });
+        board.save( (err, success) => {
+          if(err) throw err;
+          console.log(success)
+        });
       }
     });
     
@@ -69,6 +70,12 @@ function ClickHandler() {
   
   this.deleteThreads = (req, res) => {
     console.log('deleteThreads', req.body, req.params, req.query)
+    Threads
+      .findOne({board: req.params.board})
+      .exec((err, thread) => {
+      if(err) throw err;
+      console.log(thread)
+    });
   };  
   
 /*  /// app.route('/api/replies/:board')  \\\  */  
@@ -79,6 +86,11 @@ function ClickHandler() {
 
   this.createReply = (req, res) => {
     console.log('createReply', req.body)
+    Threads
+      .findOneAndUpdate({thead_id: req.body.thread_id},)
+      .exec( (err, update) => {
+        if(err) throw err;
+    });
   };   
   
   this.reportReply = (req, res) => {
