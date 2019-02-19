@@ -8,17 +8,36 @@ function ClickHandler() {
   this.recentThreads = (req, res) => {
     console.log('recentThreads', req.body, req.params, req.query)
   };
-  
+/*  
+  board  : String,
+  content: {
+    thread_id      : Number,
+    text           : String,
+    created_on     : Date,
+    bumped_on      : Date,
+    reported       : Boolean,
+    delete_password: String,
+    replies        : [{
+      reply_id       : Number,
+      text           : String,
+      created_on     : Date,
+      reported       : Boolean,
+      delete_password: String
+    }]
+  }
+*/
   this.createThreads = (req, res) => {
     console.log('createThreads', req.body)
     Threads
-      .find({})
+      .findOneAndUpdate({board: req.body.board})
       .exec( (err, threads) => {
       if(err) throw err;
-      console.log(threads)
+      if(!threads) {
+        console.log('threads', threads)
+      }
     });
     
-    res.redirect('/b/' + req.body.board)
+    //res.redirect('/b/' + req.body.board)
   };
   
   this.reportThreads = (req, res) => {

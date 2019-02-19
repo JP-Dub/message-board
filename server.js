@@ -9,13 +9,18 @@ var apiRoutes         = require('./routes/api.js');
 var fccTestingRoutes  = require('./routes/fcctesting.js');
 var runner            = require('./test-runner');
 
-const helmet = require('helmet')
+const helmet   = require('helmet'),
+      mongoose = require('mongoose');
 
 var app = express();
 
 app.use(helmet());
 app.use(helmet.dnsPrefetchControl());
 app.use(helmet.referrerPolicy({ policy: 'same-origin' }))
+
+mongoose.connect(process.env.MONGO_URI, {useNewUrlParser : true});
+mongoose.Promise = global.Promise;
+
 app.use('/public', express.static(process.cwd() + '/public'));
 
 app.use(cors({origin: '*'})); //For FCC testing purposes only
