@@ -1,5 +1,7 @@
 'use stric';
 
+var Threads = require('../models/users.js');
+
 function ClickHandler() {
  
 /* /// app.route('/api/threads/:board')  \\\ */  
@@ -21,15 +23,21 @@ function ClickHandler() {
   
 /*  /// app.route('/api/replies/:board')  \\\  */  
   
-  this.showRepli = (req, res) => {
+  this.showReplies = (req, res) => {
   
   }; 
-    
-  //app.route('/api/replies/:board')
-      // .get(clickHandler.showReplies)
-      // .post(clickHandler.createReply)
-      // .put(clickHandler.reportReply)
-      // .delete(clickHandler.changeReply);
+
+  this.createReply = (req, res) => {
+  
+  };   
+  
+  this.reportReply = (req, res) => {
+  
+  };     
+  
+  this.changeReply = (req, res) => {
+  
+  };         
   
 };
 

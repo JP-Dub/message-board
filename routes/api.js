@@ -19,14 +19,14 @@ module.exports = function (app) {
   
   app.route('/api/threads/:board')
       .get(clickHandler.recentThreads)
-      // .post(clickHandler.createThreads)
-      // .put(clickHandler.reportThreads)
-      // .delete(clickHandler.deleteThreads);
+      .post(clickHandler.createThreads)
+      .put(clickHandler.reportThreads)
+      .delete(clickHandler.deleteThreads);
     
   app.route('/api/replies/:board')
-      // .get(clickHandler.showReplies)
-      // .post(clickHandler.createReply)
-      // .put(clickHandler.reportReply)
-      // .delete(clickHandler.changeReply);
+      .get(clickHandler.showReplies)
+      .post(clickHandler.createReply)
+      .put(clickHandler.reportReply)
+      .delete(clickHandler.changeReply);
 
 };
