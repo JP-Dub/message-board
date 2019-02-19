@@ -37,17 +37,19 @@ function ClickHandler() {
   this.createThreads = (req, res) => {
     console.log('createThreads', req.body)
     Threads
-      .findOneAndUpdate({board: req.body.board})
-      //.sort({'content.thread_id': -1})
+      .findOne({board: req.body.board})
+      .sort({'thread_id': -1})
       .exec( (err, threads) => {
       if(err) throw err;
       
-      if(!threads) {
-        console.log('no threads?')
-        let board = new Threads();
-        
+      let board = new Threads();
+      
+      let num;
+      if(!threads) { 
         board.board = req.body.board;
-        board.thread_id = 1;
+        num = 1;
+      }
+        board.thread_id = num|| threads.thread_id++;
         board.text = req.body.text;
         board.created_on = new Date().toString();
         board.bumped_on = board.created_on;
@@ -60,7 +62,7 @@ function ClickHandler() {
           if(err) throw err;
           console.log(success)
         });
-      }
+      
     });
     
     res.redirect('/b/' + req.body.board)
@@ -96,7 +98,7 @@ function ClickHandler() {
                           created_on: new Date().toString(),
                           reported: false,
                           delete_password: req.body.delete_password
-                        }]
+                        }],
                         })
       .exec( (err, update) => {
         if(err) throw err;
