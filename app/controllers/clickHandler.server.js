@@ -33,7 +33,12 @@ function ClickHandler() {
       .exec( (err, threads) => {
       if(err) throw err;
       if(!threads) {
-        console.log('threads', threads)
+        let board = new Threads();
+        
+        board.board = req.body.board;
+        board.content.thread_id = '0001';
+        board.content.text = req.body.text;
+        board.content.created_on = 
       }
     });
     
