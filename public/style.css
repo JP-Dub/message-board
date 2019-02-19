@@ -5,6 +5,7 @@
 
 body {
   padding: 10px;
+  background-color: dimgray;
 }
 
 .replies {
@@ -36,15 +37,17 @@ body {
 }
 
 #if_container {
-  background-color: dimgray;
-  border: 1px solid blue;
-  : none;
+  width: 100%;
+  height: 100%;
+  
+  overflow-x: hidden;
 }
 
-iframe {
-  background-color: white;
+#iframe {  
+  background-color: white ;
   position: relative;
-  height: 98vh;
+  height: 97.9vh;
   width: 90%;
   margin-left: 5%;
+  border: 1px solid black;
 }
