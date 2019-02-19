@@ -87,9 +87,19 @@ function ClickHandler() {
   this.createReply = (req, res) => {
     console.log('createReply', req.body)
     Threads
-      .findOneAndUpdate({thead_id: req.body.thread_id},)
+      .findOneAndUpdate({_id: req.body.thread_id},
+                        { replies: [{
+                          thread_id : 1,
+                          text: req.body.text,
+                          created_on: new Date().toString(),
+                          reported: false,
+                          delete_password: req.body.delete_password
+                        }]
+                        })
       .exec( (err, update) => {
         if(err) throw err;
+      console.log(update)
+      res.json(update);
     });
   };   
   
