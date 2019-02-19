@@ -4,8 +4,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var Threads = new Schema({
+  Board          : String,
   thread_id      : Number,
-  thread         : String,
   text           : String,
   created_on     : Date,
   bumped_on      : Date,
