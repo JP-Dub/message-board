@@ -46,7 +46,6 @@ body {
 }
 
 #iframe { 
-  z-index: 1;
   margin-top: 20px;
   background-color: white !important;
   position: relative;
@@ -54,5 +53,4 @@ body {
   width: 90%;
   margin-left: 5%;
   border: 2px solid black;
-  padding-bottom: 5px;
 }
