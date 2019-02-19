@@ -34,3 +34,17 @@ body {
 #submitNewThread {
   margin: 50px;
 }
+
+#if_container {
+  background-color: dimgray;
+  border: 1px solid blue;
+  : none;
+}
+
+iframe {
+  background-color: white;
+  position: relative;
+  height: 98vh;
+  width: 90%;
+  margin-left: 5%;
+}
