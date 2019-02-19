@@ -11,7 +11,7 @@ var Threads = new Schema({
   reported       : Boolean,
   delete_password: String,
   replies        : [{
-    thread_id             : Number,
+    reply_id             : Number,
     text           : String,
     created_on     : Date,
     reported       : Boolean,
