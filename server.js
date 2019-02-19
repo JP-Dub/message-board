@@ -15,7 +15,7 @@ var app = express();
 
 app.use(helmet());
 app.use(helmet.dnsPrefetchControl());
-
+app.use(helmet.referrerPolicy({ policy: 'same-origin' }))
 app.use('/public', express.static(process.cwd() + '/public'));
 
 app.use(cors({origin: '*'})); //For FCC testing purposes only
@@ -73,3 +73,4 @@ app.listen(process.env.PORT || 3000, function () {
 });
 
 module.exports = app; //for testing
+
