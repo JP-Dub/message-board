@@ -41,7 +41,9 @@ function ClickHandler() {
       //.sort({'content.thread_id': -1})
       .exec( (err, threads) => {
       if(err) throw err;
+      
       if(!threads) {
+        console.log('no threads?')
         let board = new Threads();
         
         board.board = req.body.board;
