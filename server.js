@@ -34,9 +34,14 @@ app.route('/b/:board/:threadid')
   });
 
 //Index page (static HTML)
-app.route('/')
+app.route('/home')
   .get(function (req, res) {
     res.sendFile(process.cwd() + '/views/index.html');
+  });
+
+app.route('/')
+  .get(function (req, res) {
+    res.sendFile(process.cwd() + '/views/home.html');
   });
 
 //For FCC testing purposes
