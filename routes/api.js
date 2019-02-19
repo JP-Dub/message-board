@@ -18,15 +18,15 @@ module.exports = function (app) {
   let clickHandler = new ClickHandler();
   
   app.route('/api/threads/:board')
-      .get()
-      .post()
-      .put()
-      .delete();
+      .get(clickHandler.recentThreads)
+      // .post(clickHandler.createThreads)
+      // .put(clickHandler.reportThreads)
+      // .delete(clickHandler.deleteThreads);
     
   app.route('/api/replies/:board')
-      .get()
-      .post()
-      .put()
-      .delete();
+      // .get(clickHandler.showReplies)
+      // .post(clickHandler.createReply)
+      // .put(clickHandler.reportReply)
+      // .delete(clickHandler.changeReply);
 
 };
