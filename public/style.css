@@ -36,15 +36,17 @@ body {
 }
 
 #if_container {
-  margin-top: -10px;
+  margin-top: -5px;
   padding-bottom: 23px;
   width: 100%;
   height: auto;
   background-color: #ccffff;
+  background-image: url('https://www.publicdomainpictures.net/pictures/100000/velka/old-wooden-background-1409242795ze8.jpg');
   overflow: hidden;
 }
 
-#iframe {  
+#iframe { 
+  z-index: 1;
   margin-top: 20px;
   background-color: white !important;
   position: relative;
