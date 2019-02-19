@@ -11,6 +11,14 @@ function ClickHandler() {
   
   this.createThreads = (req, res) => {
     console.log('createThreads', req.body)
+    Threads
+      .find({})
+      .exec( (err, threads) => {
+      if(err) throw err;
+      console.log(threads)
+    });
+    
+    res.redirect('/b/' + req.body.board)
   };
   
   this.reportThreads = (req, res) => {
