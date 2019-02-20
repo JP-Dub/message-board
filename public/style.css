@@ -8,6 +8,7 @@ body {
 }
 
 .replies {
+  margin-top: 5px;
   margin-left: 50px;
 }
 
@@ -28,12 +29,20 @@ body {
 }
 
 .id {
+  text-align: right;
   font-size: 10.5px;
+  
 }
 
 #submitNewThread {
   margin: 50px;
 }
+
+#reportThread {
+/*   padding-top: 5px; */
+  margin-top: 5px;
+}
+
 
 #if_container {
   margin-top: -5px;
