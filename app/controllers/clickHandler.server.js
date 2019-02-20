@@ -141,13 +141,17 @@ function ClickHandler() {
   
   this.changeReply = (req, res) => {
     console.log('changeReply', req.body, req.params, req.query)
-    Threads
-      .findOne({board: req.params.board})
+    let Content = Threads.findOne({board: req.params.board}).select({content: 1, _id:false })
       //.where('delete_password', req.body.delete_password)
-      .exec((err, reply) => {
-        if(err) throw err; 
-      console.log('reply', reply)
-        reply.findOne({   
+      // .exec((err, reply) => {
+      //   if(err) throw err; 
+     // console.log(Reply)
+     Content
+       .findOne({'content._id': req.body.thread_id}).select('content._id', req.body.reply._id)
+       .exec((err, content) => {
+          
+          console.log(content)
+        })
 //         reply.content.forEach( (id, i) => {
 //           if(id._id == req.body.thread_id) {
 //             id.replies.forEach( (rep, j) => {
@@ -165,7 +169,7 @@ function ClickHandler() {
 //           }
 //         });
     
-    });
+
   };         
   
 };
