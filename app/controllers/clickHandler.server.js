@@ -11,9 +11,9 @@ function ClickHandler() {
       .find({board: req.params.board})
       .exec( (err, threads) => {
         if(err) throw err;
-      
-        res.json(threads)
         console.log(threads);
+        res.json(threads)
+       
     });
   };
 /*  
@@ -39,7 +39,7 @@ function ClickHandler() {
     console.log('createThreads', req.body)
     Threads
       .findOne({board: req.body.board})
-      .sort({'thread_id': -1})
+      //.sort({'thread_id': -1})
       .exec( (err, threads) => {
       if(err) throw err;
       
@@ -50,19 +50,22 @@ function ClickHandler() {
         board.board = req.body.board;
         num = 1;
       }
-        board.thread_id = num|| threads.thread_id++;
-        board.text = req.body.text;
-        board.created_on = new Date().toString();
-        board.bumped_on = board.created_on;
-        board.reported = false;
-        board.delete_password = req.body.delete_password;
-        board.replies = [];
-        board.replycount = board.replies.length;
+      
+      board.content.push({
+        thread_id : num || threads.thread_id++,
+        text : req.body.text,
+        created_on : new Date().toString(),
+        bumped_on : board.created_on,
+        reported : false,
+        delete_password : req.body.delete_password,
+        replies : [],
+        replycount : 0
+      })
         
-        board.save( (err, success) => {
-          if(err) throw err;
-          console.log(success)
-        });
+      // board.save( (err, success) => {
+      //   if(err) throw err;
+      //   console.log(success)
+      // });
       
     });
     
