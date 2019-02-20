@@ -96,15 +96,9 @@ function ClickHandler() {
   this.createReply = (req, res) => {
     console.log('createReply', req.body, req.params)
     Threads
-      .findOne({board : req.params.})
-                        // { replies: [{
-                        //   thread_id : 1,
-                        //   text: req.body.text,
-                        //   created_on: new Date().toString(),
-                        //   reported: false,
-                        //   delete_password: req.body.delete_password
-                        // }],
-                        // })
+      .findOne({board : req.params.board})
+      .where('content').equals({_id : req.body.thread_id})
+      
       .exec( (err, update) => {
         if(err) throw err;
       console.log(update)
