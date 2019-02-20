@@ -44,8 +44,8 @@ function ClickHandler() {
       if(err) throw err;
        console.log('threads', threads)
      
-     
-      let num = threads.content[threads.content.length-1].thread_id + 1;
+      let board = threads;
+      let num = !threads ? 0 : threads.content[threads.content.length-1].thread_id + 1;
       if(!threads) { 
         board = new Threads();
         board.board = req.body.board;
