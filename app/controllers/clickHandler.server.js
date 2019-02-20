@@ -6,12 +6,12 @@ function ClickHandler() {
  
 /* /// app.route('/api/threads/:board')  \\\ */  
   this.recentThreads = (req, res) => {
-    console.log('recentThreads', req.body, req.params, req.query)
+    //console.log('recentThreads', req.body, req.params, req.query)
     Threads
       .find({board: req.params.board})
       .exec( (err, threads) => {
         if(err) throw err;
-        console.log(threads);
+        //console.log(threads);
         res.json(threads)
        
     });
@@ -36,7 +36,7 @@ function ClickHandler() {
   }]
 */
   this.createThreads = (req, res) => {
-    console.log('createThreads', req.body)
+    //console.log('createThreads', req.body)
     Threads
       .findOne({board: req.body.board})
       //.sort({'thread_id': -1})
@@ -65,7 +65,7 @@ function ClickHandler() {
         
       board.save( (err, success) => {
         if(err) throw err;
-        console.log(success)
+        //console.log(success)
       });
       
     });
