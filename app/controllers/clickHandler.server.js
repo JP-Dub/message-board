@@ -17,22 +17,23 @@ function ClickHandler() {
     });
   };
 /*  
-  board  : String,
-  content: {
+  board          : String,
+  content :[{
     thread_id      : Number,
     text           : String,
     created_on     : Date,
     bumped_on      : Date,
     reported       : Boolean,
     delete_password: String,
+    replycount     : Number,
     replies        : [{
-      reply_id       : Number,
+      thread_id       : Number,
       text           : String,
       created_on     : Date,
       reported       : Boolean,
       delete_password: String
     }]
-  }
+  }]
 */
   this.createThreads = (req, res) => {
     console.log('createThreads', req.body)
