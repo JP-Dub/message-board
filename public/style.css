@@ -30,8 +30,10 @@ body {
 
 .id {
   text-align: right;
+  margin-top: -20px;
+  float: right;
   font-size: 10.5px;
-  
+  width: 165px;
 }
 
 #submitNewThread {
