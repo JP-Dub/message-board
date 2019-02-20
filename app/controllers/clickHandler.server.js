@@ -146,10 +146,15 @@ function ClickHandler() {
       //.where('delete_password', req.body.delete_password)
       .exec((err, reply) => {
         if(err) throw err; 
-      console.log(reply);
+   
         reply.content.forEach( (id, i) => {
+          console.log('id', id)
           if(id._id == req.body.thread_id) {
-            console.log(reply.content[i].replies)
+            reply.content[i].replies.forEach( (rep, j) => {
+              if(rep._id == req.body.reply_id) {
+                console.log('rep j', rep[j])
+              }
+            })
             //res.json(reply.content[i])
           }
         });
