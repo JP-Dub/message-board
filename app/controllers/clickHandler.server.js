@@ -70,7 +70,7 @@ function ClickHandler() {
       
     });
     
-    res.redirect('/b/' + req.body.board)
+    res.redirect('/b/' + req.body.board +'/')
   };
   
   this.reportThreads = (req, res) => {
@@ -91,7 +91,15 @@ function ClickHandler() {
   let showReplies;
   this.showReplies = (req, res) => {
     console.log('showReplies', req.body, req.params, req.query)
-     console.log(showReplies)
+    Threads
+      .findOne({board: req.params.board})
+      .exec( (err, show) => {
+        if(err) throw err;
+        show.content.forEach( (id, i) => {
+          if(id._id == req.body.thread_id) {
+            res.json
+          }
+        });
     res.json(showReplies)
   }; 
 
