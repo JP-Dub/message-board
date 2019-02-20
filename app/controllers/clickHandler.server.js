@@ -88,9 +88,11 @@ function ClickHandler() {
   };  
   
 /*  /// app.route('/api/replies/:board')  \\\  */  
-  
+  let showReplies;
   this.showReplies = (req, res) => {
     console.log('showReplies', req.body, req.params, req.query)
+ 
+    res.json(showReplies)
   }; 
 
   this.createReply = (req, res) => {
@@ -115,7 +117,7 @@ function ClickHandler() {
         });
       
         update.save((err, success) => {
-          //console.log(success)
+          showReplies = success;//console.log(success)
           res.redirect('/b/' + req.params.board + '/' + req.body.thread_id);
         });
       

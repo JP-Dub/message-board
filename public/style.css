@@ -34,6 +34,7 @@ body {
   float: right;
   font-size: 10.5px;
   width: 165px;
+  border: 1px solid blue;
 }
 
 .reply > .id {
@@ -52,6 +53,10 @@ body {
   margin-top: 5px;
 }
 
+.main > h3 {
+  width: 80%;
+  border: 1px solid red;
+}
 
 #if_container {
   margin-top: -5px;
