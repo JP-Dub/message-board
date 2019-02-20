@@ -115,8 +115,8 @@ function ClickHandler() {
         });
       
         update.save((err, success) => {
-          console.log(success)
-          res.json(success);
+          //console.log(success)
+          res.redirect('/b/' + req.params.board + '/' + req.body.thread_id);
         });
       
     });

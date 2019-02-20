@@ -13,7 +13,7 @@ body {
 }
 
 .reply {
-  border: 1px dotted black;
+  border: 3px inset lightblue; /*black*/
   margin: 5px;
   padding: 5px;
 }
@@ -23,7 +23,7 @@ body {
 }
 
 .thread {
-  border: 2px solid black;
+  border: 5px ridge;
   padding: 5px;
   margin-bottom: 5px;
 }
@@ -36,12 +36,20 @@ body {
   width: 165px;
 }
 
+.reply > .id {
+  margin-top: 0px;
+}
+
 #submitNewThread {
   margin: 50px;
 }
 
-#reportThread {
+#reportThread, #reportReply {
   margin-top: 2px;
+}
+
+.reply > p:last-child {
+  margin-top: 5px;
 }
 
 
