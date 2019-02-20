@@ -120,7 +120,7 @@ function ClickHandler() {
               text           : req.body.text,
               created_on     : new Date().toString(),
               reported       : false,
-              delete_password: req.body.deleted_password  
+              delete_password: req.body.delete_password  
             });
             update.content[i].bumped_on = new Date().toString();
             update.content[i].replycount+= 1;
@@ -128,7 +128,6 @@ function ClickHandler() {
         });
       
         update.save((err, success) => {
-          showReplies = success;
           res.redirect('/b/' + req.params.board + '/' + req.body.thread_id);
         });
        //res.redirect('/b/' + req.params.board + '/' + req.body.thread_id);
@@ -143,9 +142,19 @@ function ClickHandler() {
   this.changeReply = (req, res) => {
     console.log('changeReply', req.body, req.params, req.query)
     Threads
-      .findOneAndDelete({'content._id': req.body.reply_id})
-      .where('delete_password', req.body.delete_password)
-      .exec('
+      .findOne({board: req.params.board})
+      //.where('delete_password', req.body.delete_password)
+      .exec((err, reply) => {
+        if(err) throw err; 
+      console.log(reply);
+        reply.content.forEach( (id, i) => {
+          if(id._id == req.body.thread_id) {
+            console.log(reply.content[i].replies)
+            //res.json(reply.content[i])
+          }
+        });
+    
+    });
   };         
   
 };
