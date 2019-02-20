@@ -99,18 +99,26 @@ function ClickHandler() {
       .findOne({board : req.params.board})
       .exec( (err, update) => {
         if(err) throw err;
-        console.log(update)
-      // update.content.forEach( (id, i) => {
-      //   if(id._id == req.body.thread_id) {
-      //     update.content[i].replies.push({
-      //       text           : req.body.text,
-      //       created_on     : new Date().toString(),
-      //       reported       : false,
-      //       delete_password: req.body.deleted_password  
-      //     });
-      //   }
-      // })
-      res.json(update);
+        //console.log(update)
+      
+        update.content.forEach( (id, i) => {
+          if(id._id == req.body.thread_id) {
+            update.content[i].replies.push({
+              text           : req.body.text,
+              created_on     : new Date().toString(),
+              reported       : false,
+              delete_password: req.body.deleted_password  
+            });
+            update.content[i].bumped_on = new Date().toString();
+            update.content[i].replycount+= 1;
+          }
+        });
+      
+        update.save((err, success) => {
+          console.log(success)
+          res.json(success);
+        });
+      
     });
   };   
   
