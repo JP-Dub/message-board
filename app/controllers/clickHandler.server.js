@@ -95,12 +95,15 @@ function ClickHandler() {
       .findOne({board: req.params.board})
       .exec( (err, show) => {
         if(err) throw err;
+      console.log('show', show)
         show.content.forEach( (id, i) => {
-          if(id._id == req.body.thread_id) {
-            res.json
+          if(id._id == req.query.thread_id) {
+            console.log(show.content[i])
+            res.json(show.content[i])
           }
         });
-    res.json(showReplies)
+    });
+    //res.json(showReplies)
   }; 
 
   this.createReply = (req, res) => {
