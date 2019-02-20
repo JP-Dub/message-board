@@ -91,7 +91,7 @@ function ClickHandler() {
   let showReplies;
   this.showReplies = (req, res) => {
     console.log('showReplies', req.body, req.params, req.query)
- 
+     console.log(showReplies)
     res.json(showReplies)
   }; 
 
@@ -117,9 +117,10 @@ function ClickHandler() {
         });
       
         update.save((err, success) => {
-          showReplies = success;//console.log(success)
+          showReplies = success;
           res.redirect('/b/' + req.params.board + '/' + req.body.thread_id);
         });
+       //res.redirect('/b/' + req.params.board + '/' + req.body.thread_id);
       
     });
   };   

@@ -40,7 +40,9 @@
             // THIS ARRAY SET UP IS FOR CODE READABILITIES AND TESTING!
             // THIS IS NOT WHAT IT WOULD LOOK LIKE TO GO LIVE
             //
-              console.log(ele);//can I use typeScript please?!
+            console.log('data', ele)
+            ele.replies.forEach(ele => {
+              console.log('replies', ele);//can I use typeScript please?!
               var thread = ['<div class="thread">'];
               thread.push('<div class="main">')
               thread.push('<p class="id">id: '+ele._id+' ('+ele.created_on+')</p>');
@@ -64,6 +66,7 @@
               thread.push('</form></div></div></div>')
               boardThreads.push(thread.join(''));
             $('#boardDisplay').html(boardThreads.join(''));
+          });
           }
         });
         
