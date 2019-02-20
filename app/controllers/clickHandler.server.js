@@ -141,7 +141,11 @@ function ClickHandler() {
   };     
   
   this.changeReply = (req, res) => {
-    console.log('changeReply', req.body)
+    console.log('changeReply', req.body, req.params, req.query)
+    Threads
+      .findOneAndDelete({'content._id': req.body.reply_id})
+      .where('delete_password', req.body.delete_password)
+      .exec('
   };         
   
 };
