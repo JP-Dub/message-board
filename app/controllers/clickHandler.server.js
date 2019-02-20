@@ -97,11 +97,15 @@ function ClickHandler() {
     console.log('createReply', req.body, req.params)
     Threads
       .findOne({board : req.params.board})
-      .where('content').equals({_id : req.body.thread_id})
-      
       .exec( (err, update) => {
         if(err) throw err;
-      console.log(update)
+      
+      update.content.forEach( (id, i) => {
+        console.log('content', id._id, req.body.thread_id)
+        if(id._id == req.body.thread_id) {
+          update.content[i];
+        }
+      })
       res.json(update);
     });
   };   
