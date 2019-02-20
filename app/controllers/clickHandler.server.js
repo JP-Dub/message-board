@@ -6,7 +6,7 @@ function ClickHandler() {
  
 /* /// app.route('/api/threads/:board')  \\\ */  
   this.recentThreads = (req, res) => {
-    //console.log('recentThreads', req.body, req.params, req.query)
+    console.log('recentThreads', req.body, req.params, req.query)
     Threads
       .find({board: req.params.board})
       .exec( (err, threads) => {
