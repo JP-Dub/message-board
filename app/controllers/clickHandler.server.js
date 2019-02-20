@@ -94,9 +94,9 @@ function ClickHandler() {
   }; 
 
   this.createReply = (req, res) => {
-    console.log('createReply', req.body)
+    console.log('createReply', req.body, req.params)
     Threads
-      .findOne({'content[thread_id]' : req.body.thread_id})
+      .findOne({board : req.params.})
                         // { replies: [{
                         //   thread_id : 1,
                         //   text: req.body.text,
