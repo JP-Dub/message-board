@@ -42,17 +42,18 @@ function ClickHandler() {
       //.sort({'thread_id': -1})
       .exec( (err, threads) => {
       if(err) throw err;
-      
-      let board = new Threads();
-      
-      let num;
+       console.log('threads', threads)
+     
+     
+      let num = threads.content[threads.content.length-1].thread_id + 1;
       if(!threads) { 
+        board = new Threads();
         board.board = req.body.board;
         num = 1;
       }
       
       board.content.push({
-        thread_id : num || threads.thread_id++,
+        thread_id : num,
         text : req.body.text,
         created_on : new Date().toString(),
         bumped_on : board.created_on,
@@ -62,10 +63,10 @@ function ClickHandler() {
         replycount : 0
       })
         
-      // board.save( (err, success) => {
-      //   if(err) throw err;
-      //   console.log(success)
-      // });
+      board.save( (err, success) => {
+        if(err) throw err;
+        console.log(success)
+      });
       
     });
     
