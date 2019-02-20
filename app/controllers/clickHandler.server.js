@@ -56,7 +56,7 @@ function ClickHandler() {
         thread_id : num,
         text : req.body.text,
         created_on : new Date().toString(),
-        bumped_on : board.created_on,
+        bumped_on : new Date().toString(),
         reported : false,
         delete_password : req.body.delete_password,
         replies : [],
@@ -99,13 +99,17 @@ function ClickHandler() {
       .findOne({board : req.params.board})
       .exec( (err, update) => {
         if(err) throw err;
-      
-      update.content.forEach( (id, i) => {
-        console.log('content', id._id, req.body.thread_id)
-        if(id._id == req.body.thread_id) {
-          update.content[i];
-        }
-      })
+        console.log(update)
+      // update.content.forEach( (id, i) => {
+      //   if(id._id == req.body.thread_id) {
+      //     update.content[i].replies.push({
+      //       text           : req.body.text,
+      //       created_on     : new Date().toString(),
+      //       reported       : false,
+      //       delete_password: req.body.deleted_password  
+      //     });
+      //   }
+      // })
       res.json(update);
     });
   };   
