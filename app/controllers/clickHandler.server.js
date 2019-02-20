@@ -146,23 +146,24 @@ function ClickHandler() {
       //.where('delete_password', req.body.delete_password)
       .exec((err, reply) => {
         if(err) throw err; 
-   
-        reply.content.forEach( (id, i) => {
-          if(id._id == req.body.thread_id) {
-            id.replies.forEach( (rep, j) => {
-              console.log('rep', rep);
-              if(rep._id == req.body.reply_id && rep.delete_password) {
-                
-                // reply.deleteOne({_id: req.body.reply_id}), (err, success) => {
-                //   if(err) throw err;
-                //   console.log(success)
-                };
+      console.log('reply', reply)
+        reply.findOne({   
+//         reply.content.forEach( (id, i) => {
+//           if(id._id == req.body.thread_id) {
+//             id.replies.forEach( (rep, j) => {
+//               console.log('rep', rep);
+//               if(rep._id == req.body.reply_id && rep.delete_password == req.body.delete_password) {
+//                 console.log('found')
+//                 Threads.remove({_id:req.body.reply_id}), (err, success) => {
+//                    if(err) throw err;
+//                    console.log(success)
+//                 };
 
-              }
-            })
-            //res.json(reply.content[i])
-          }
-        });
+//               }
+//             })
+//             //res.json(reply.content[i])
+//           }
+//         });
     
     });
   };         
