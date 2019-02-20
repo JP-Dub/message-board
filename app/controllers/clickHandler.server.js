@@ -148,11 +148,16 @@ function ClickHandler() {
         if(err) throw err; 
    
         reply.content.forEach( (id, i) => {
-          console.log('id', id)
           if(id._id == req.body.thread_id) {
-            reply.content[i].replies.forEach( (rep, j) => {
-              if(rep._id == req.body.reply_id) {
-                console.log('rep j', rep[j])
+            id.replies.forEach( (rep, j) => {
+              console.log('rep', rep);
+              if(rep._id == req.body.reply_id && rep.delete_password) {
+                
+                // reply.deleteOne({_id: req.body.reply_id}), (err, success) => {
+                //   if(err) throw err;
+                //   console.log(success)
+                };
+
               }
             })
             //res.json(reply.content[i])
