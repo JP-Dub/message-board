@@ -130,8 +130,7 @@ function ClickHandler() {
         update.save((err, success) => {
           res.redirect('/b/' + req.params.board + '/' + req.body.thread_id);
         });
-       //res.redirect('/b/' + req.params.board + '/' + req.body.thread_id);
-      
+       //res.redirect('/b/' + req.params.board + '/' + req.body.thread_id);      
     });
   };   
   
@@ -142,7 +141,7 @@ function ClickHandler() {
   this.changeReply = (req, res) => {
     console.log('changeReply', req.body)
     Threads
-      .findOne({board: req.params.board}, {'content.$[element]._id': req.body.thread_id})
+      .findOne({board: req.params.board, 'content.[]._id': req.body.thread_id})
       .exec((err, reply) => {
         if(err) throw err; 
      console.log(reply)
