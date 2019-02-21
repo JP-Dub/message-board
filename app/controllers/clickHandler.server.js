@@ -143,9 +143,9 @@ function ClickHandler() {
   
   this.changeReply = (req, res) => {
     console.log('changeReply', req.body)
-    Threads
-      .findOne({ 'content._id': req.body.thread_id })//, replies: [ { _id: req.body.reply_id}}})
-      .exec((err, reply) => {
+    let Doc = Threads.where({ board: req.params.board})//, replies: [ { _id: req.body.reply_id}}})
+    Doc.findOne({'content.0._id': req.body.thread_id})  
+    .exec((err, reply) => {
         if(err) throw err; 
      console.log(reply)
 //      Content
