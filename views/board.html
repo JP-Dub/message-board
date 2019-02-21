@@ -85,12 +85,12 @@
         
         $('#newThread').submit(function(){
           console.log('#newThread', currentBoard, url)
-          $('<input />').attr('type', 'hidden')
-            .attr('name', 'board')
-            .attr('value', currentBoard)
-            .appentTo(this);
-            $(this).attr('action', "/api/threads/" + currentBoard);
-          return true;
+          $(this).attr('type', 'hidden')
+            .attr('name', 'board').val(currentBoard)
+            .attr('action', "/api/threads/" + currentBoard)
+            .append(this);
+           // $(this).attr('action', "/api/threads/" + currentBoard);
+          
         });
         
         $('#boardDisplay').on('submit','#reportThread', function(e) {
