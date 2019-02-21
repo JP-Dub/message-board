@@ -88,7 +88,7 @@ function ClickHandler() {
   };  
   
 /*  /// app.route('/api/replies/:board')  \\\  */  
-  let showReplies;
+  
   this.showReplies = (req, res) => {
     console.log('showReplies', req.body, req.params, req.query)
     Threads
