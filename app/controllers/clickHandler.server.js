@@ -78,7 +78,7 @@ function ClickHandler() {
   };
   
   this.deleteThreads = (req, res) => {
-    console.log('deleteThreads', req.body, req.params, req.query)
+    console.log('deleteThreads', req.body, req.params)
     Threads
       .findOne({board: req.params.board})
       .exec((err, thread) => {
