@@ -83,7 +83,7 @@ function ClickHandler() {
       .findOne({board: req.params.board})
       .exec((err, thread) => {
       if(err) throw err;
-      console.log(thread)
+      console.log(thread.content[0])
     });
   };  
   
