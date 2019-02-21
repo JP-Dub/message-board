@@ -9,7 +9,6 @@ function ClickHandler() {
     console.log('recentThreads', req.body, req.params, req.query)
     Threads
       .find({board: req.params.board})
-      .limit({'content.replies' : 3})
       .exec( (err, threads) => {
         if(err) throw err;
         
@@ -145,7 +144,7 @@ function ClickHandler() {
   this.changeReply = (req, res) => {
     console.log('changeReply', req.body)
     Threads
-      .findOne({ 'content.replies': { $elemMatch : { delete_password: req.body.delete_password}}})//, replies: [ { _id: req.body.reply_id}}})
+      .findOne({ 'content': { $all : { _id:  req.body.reply_id}}})//, replies: [ { _id: req.body.reply_id}}})
       .exec((err, reply) => {
         if(err) throw err; 
      console.log(reply)
