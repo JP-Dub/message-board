@@ -9,9 +9,10 @@ function ClickHandler() {
     console.log('recentThreads', req.body, req.params, req.query)
     Threads
       .find({board: req.params.board})
+      .limit({'content.replies' : 3})
       .exec( (err, threads) => {
         if(err) throw err;
-        //console.log(threads);
+        
         res.json(threads)
        
     });
@@ -63,10 +64,10 @@ function ClickHandler() {
         replycount : 0
       })
         
-      // board.save( (err, success) => {
-      //   if(err) throw err;
-      //   //console.log(success)
-      // });
+      board.save( (err, success) => {
+        if(err) throw err;
+        //console.log(success)
+      });
       
     });
     
@@ -95,11 +96,14 @@ function ClickHandler() {
       .findOne({board: req.params.board})
       .exec( (err, show) => {
         if(err) throw err;
-      console.log('show', show)
+      //console.log('show', show)
         show.content.forEach( (id, i) => {
           if(id._id == req.query.thread_id) {
             console.log(show.content[i])
-            res.json(show.content[i])
+            let content = show.content[i];
+            
+            
+            res.json(content)
           }
         });
     });
