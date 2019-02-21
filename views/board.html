@@ -35,8 +35,7 @@
       $(function() {
         var currentBoard = window.location.pathname.slice(3);
         var url = "/api/threads/"+currentBoard;
-        var board = currentBoard;
-        $('#boardTitle').text('Welcome to '+ board.split('%20').join(' ') )       
+        $('#boardTitle').text('Welcome to '+ currentBoard.split('%20').join(' ') )       
         $.ajax({
           type: "GET",
           url: url,
@@ -85,7 +84,7 @@
         });
         
         $('#newThread').submit(function(){
-          console.log('#newThread', currentBoard, url)
+          console.log('#newThread', currentBoard.slice(0,-1), url)
           $('#board1').attr('value', currentBoard.slice(0, -1));  
           $(this).attr('action', "/api/threads/" + currentBoard);
         });
