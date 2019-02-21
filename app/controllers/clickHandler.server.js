@@ -158,13 +158,8 @@ function ClickHandler() {
                 rep.created_on = new Date().toString();
                 id.bumped_on = rep.created_on;
                 reply.save((err, success) => {
-                 res.send('success');
                 }, {new: true});
-//                 Threads.remove({_id:req.body.reply_id}), (err, success) => {
-//                    if(err) throw err;
-//                    console.log(success)
-//                 };
-
+                
                } else {
                  res.send('incorrect password');
                }
