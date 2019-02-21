@@ -14,22 +14,24 @@ const helmet   = require('helmet'),
 
 var app = express();
 
-app.use(helmet());
-app.use(helmet.dnsPrefetchControl());
-app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
-app.use(helmet.frameguard({ action: 'sameorigin' }));
+//app.use(helmet());
+// app.use(helmet.dnsPrefetchControl());
+// app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
+// app.use(helmet.frameguard({ action: 'sameorigin' }));
 
-/*
 app.use(helmet({
   frameguard : {
     action: 'sameorigin'
-    },
-    referrerPolicy : {
-      policy : 'same-origin'
-      }
+  },
+  referrerPolicy : {
+    policy : 'same-origin'
+  },
+  dnsPrefetchControl : {
+    allow: true
+  }
 
-});
-*/
+}));
+
 
 mongoose.connect(process.env.MONGO_URI, {useNewUrlParser : true});
 mongoose.Promise = global.Promise;
