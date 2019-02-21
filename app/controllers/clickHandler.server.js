@@ -63,10 +63,10 @@ function ClickHandler() {
         replycount : 0
       })
         
-      board.save( (err, success) => {
-        if(err) throw err;
-        //console.log(success)
-      });
+      // board.save( (err, success) => {
+      //   if(err) throw err;
+      //   //console.log(success)
+      // });
       
     });
     
