@@ -36,13 +36,13 @@ function ClickHandler() {
   }]
 */
   this.createThreads = (req, res) => {
-    //console.log('createThreads', req.body)
+    console.log('createThreads', req.body)
     Threads
       .findOne({board: req.body.board})
       //.sort({'thread_id': -1})
       .exec( (err, threads) => {
       if(err) throw err;
-       console.log('threads', threads)
+       //console.log('threads', threads)
      
       let board = threads;
       let num = !threads ? 0 : threads.content[threads.content.length-1].thread_id + 1;

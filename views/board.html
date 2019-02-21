@@ -84,7 +84,7 @@
         });
         
         $('#newThread').submit(function(){
-          console.log('#newThread', currentBoard)
+          console.log('#newThread', currentBoard, url)
           $(this).attr('action', "/api/threads/" + currentBoard);
         });
         
