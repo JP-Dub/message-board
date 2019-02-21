@@ -155,14 +155,18 @@ function ClickHandler() {
               if(rep._id == req.body.reply_id && rep.delete_password == req.body.delete_password) {
                 console.log('found')
                 rep.text = '[deleted]';
+                rep.created_on = new Date().toString();
+                id.bumped_on = rep.created_on;
                 reply.save((err, success) => {
-                  console.log(success)
+                 res.send('success');
                 }, {new: true});
 //                 Threads.remove({_id:req.body.reply_id}), (err, success) => {
 //                    if(err) throw err;
 //                    console.log(success)
 //                 };
 
+               } else {
+                 res.send('incorrect password');
                }
              })
             //res.json(reply.content[i])
