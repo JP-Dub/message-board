@@ -86,7 +86,7 @@
         
         $('#newThread').submit(function(){
           console.log('#newThread', currentBoard, url)
-          let board = $('#board1').val(currentBoard);    
+          $('#board1').attr('value', currentBoard.slice(0, -1));  
           $(this).attr('action', "/api/threads/" + currentBoard);
         });
         
