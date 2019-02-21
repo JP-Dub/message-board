@@ -63,10 +63,10 @@ function ClickHandler() {
         replycount : 0
       })
         
-      // board.save( (err, success) => {
-      //   if(err) throw err;
-      //   //console.log(success)
-      // });
+      board.save( (err, success) => {
+        if(err) throw err;
+        //console.log(success)
+      });
       
     });
     
@@ -141,7 +141,7 @@ function ClickHandler() {
   this.changeReply = (req, res) => {
     console.log('changeReply', req.body)
     Threads
-      .findOne({ 'content': [{ _id: req.body.thread_id}]})//, replies: [ { _id: req.body.reply_id}}})
+      .findOne({ 'content.replies': { $elemMatch : { delete_password: req.body.delete_password}}})//, replies: [ { _id: req.body.reply_id}}})
       .exec((err, reply) => {
         if(err) throw err; 
      console.log(reply)
