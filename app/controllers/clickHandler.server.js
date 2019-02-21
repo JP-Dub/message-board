@@ -141,7 +141,7 @@ function ClickHandler() {
   this.changeReply = (req, res) => {
     console.log('changeReply', req.body)
     Threads
-      .findOne({content: { $elemMatch : { _id: req.body.thread_id, replies: {$elemMatch : { _id: req.body.reply_id}}}}})
+      .findOne({'content._id' : req.body.thread_id })//, replies: [ { _id: req.body.reply_id}}})
       .exec((err, reply) => {
         if(err) throw err; 
      console.log(reply)
