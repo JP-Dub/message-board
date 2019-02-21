@@ -83,10 +83,8 @@
           }
         });
         
-        $('#newThread').submit(function(){
-          
+        $('#newThread').submit(function(){          
           let board = currentBoard.split('%20').join(' ');
-          console.log('#newThread', currentBoard.slice(0,-1), board)
           $('#board1').attr('value', board.slice(0, -1));  
           $(this).attr('action', "/api/threads/" + currentBoard);
         });

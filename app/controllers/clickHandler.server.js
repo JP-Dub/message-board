@@ -143,35 +143,32 @@ function ClickHandler() {
   
   this.changeReply = (req, res) => {
     console.log('changeReply', req.body)
-    let Doc = Threads.where({ board: req.params.board})//, replies: [ { _id: req.body.reply_id}}})
-    Doc.findOne({'content.0._id': req.body.thread_id})  
+    Threads.findOne({ board : req.params.board })  
     .exec((err, reply) => {
         if(err) throw err; 
-     console.log(reply)
-//      Content
-//        .findOne({})
-       
-//        .exec((err, content) => {
-          
-//           console.log(content)
-        })
-//         reply.content.forEach( (id, i) => {
-//           if(id._id == req.body.thread_id) {
-//             id.replies.forEach( (rep, j) => {
-//               console.log('rep', rep);
-//               if(rep._id == req.body.reply_id && rep.delete_password == req.body.delete_password) {
-//                 console.log('found')
+     
+        reply.content.forEach( (id, i) => {
+          if(id._id == req.body.thread_id) {
+            let index = i;
+             id.replies.forEach( (rep, j) => {
+               console.log('rep', rep);
+              if(rep._id == req.body.reply_id && rep.delete_password == req.body.delete_password) {
+                console.log('found')
+                rep.text = '[deleted]';
+                reply.save((err, success) => {
+                  console.log(success)
+                }, {new: true});
 //                 Threads.remove({_id:req.body.reply_id}), (err, success) => {
 //                    if(err) throw err;
 //                    console.log(success)
 //                 };
 
-//               }
-//             })
-//             //res.json(reply.content[i])
-//           }
-//         });
-    
+               }
+             })
+            //res.json(reply.content[i])
+          }
+        });
+       })
 
   };         
   
