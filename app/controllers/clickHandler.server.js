@@ -141,8 +141,8 @@ function ClickHandler() {
   
   this.changeReply = (req, res) => {
     console.log('changeReply', req.body)
-    Threads.findOne({'content.replies._id' : req.body.thread_id})//.select({content: 1, _id:false })
-      //.where('delete_password', req.body.delete_password)
+    Threads
+      .findOne({board: req.params.board}, {'content.$[element]._id': req.body.thread_id})
       .exec((err, reply) => {
         if(err) throw err; 
      console.log(reply)
