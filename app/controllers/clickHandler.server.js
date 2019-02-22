@@ -27,11 +27,11 @@ function ClickHandler() {
       .findOne({board: req.body.board})
       .exec( (err, threads) => {
         if(err) throw err;
-         //console.log('threads', threads)
+        console.log('threads', threads.content)
 
         let board = threads;
         let num   = !threads ? 1 
-                    : threads.content[0].thread_id + 1;
+                    : threads.content[0].thread_id;
       
         if(!threads) { 
           board       = new Threads();
@@ -39,7 +39,7 @@ function ClickHandler() {
         }
 
         board.content.unshift({
-          thread_id  : num,
+          thread_id  : num+1,
           text       : req.body.text,
           created_on : new Date().toString(),
           bumped_on  : new Date().toString(),
