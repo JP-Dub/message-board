@@ -40,11 +40,12 @@ suite('Functional Tests', function() {
     suite('GET', function() {
       test('Redirect to board/thread that we just created using GET', function(done) {
          chai.request(server)
+          .is('json')
           .get('/b/Testing/')
           .send({
             board: 'Testing',
            }) 
-          .end(function(err, res){  
+          .end(function(err, res){ 
             console.log('res', res.header)
             assert.equal(res.status, 200);
             assert.equal(res.type, 'text/html');
