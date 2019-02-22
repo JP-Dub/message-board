@@ -5,6 +5,8 @@ var Threads = require('../models/users.js');
 function ClickHandler() {
  
 /* /// app.route('/api/threads/:board')  \\\ */  
+  
+  
   this.recentThreads = (req, res) => {
     console.log('recentThreads', req.body, req.params, req.query)
     Threads
@@ -16,25 +18,7 @@ function ClickHandler() {
        
     });
   };
-/*  
-  board          : String,
-  content :[{
-    thread_id      : Number,
-    text           : String,
-    created_on     : Date,
-    bumped_on      : Date,
-    reported       : Boolean,
-    delete_password: String,
-    replycount     : Number,
-    replies        : [{
-      thread_id       : Number,
-      text           : String,
-      created_on     : Date,
-      reported       : Boolean,
-      delete_password: String
-    }]
-  }]
-*/
+
   this.createThreads = (req, res) => {
     console.log('createThreads', req.body)
     Threads
@@ -52,7 +36,7 @@ function ClickHandler() {
         num = 1;
       }
       
-      board.content.push({
+      board.content.unshift({
         thread_id : num,
         text : req.body.text,
         created_on : new Date().toString(),
@@ -83,11 +67,14 @@ function ClickHandler() {
       .findOne({board: req.params.board})
       .exec((err, thread) => {
       if(err) throw err;
-      console.log(thread.content[0])
+      console.log(thread.content)
+      thread.content.forEach(
     });
   };  
   
+  
 /*  /// app.route('/api/replies/:board')  \\\  */  
+  
   
   this.showReplies = (req, res) => {
     console.log('showReplies', req.body, req.params, req.query)
@@ -110,7 +97,7 @@ function ClickHandler() {
   }; 
 
   this.createReply = (req, res) => {
-    console.log('createReply', req.body, req.params)
+    //console.log('createReply', req.body, req.params)
     Threads
       .findOne({board : req.params.board})
       .exec( (err, update) => {
@@ -142,33 +129,32 @@ function ClickHandler() {
   };     
   
   this.changeReply = (req, res) => {
-    console.log('changeReply', req.body)
+    //console.log('changeReply', req.body)
     Threads.findOne({ board : req.params.board })  
     .exec((err, reply) => {
         if(err) throw err; 
-     
+        let response;
         reply.content.forEach( (id, i) => {
           if(id._id == req.body.thread_id) {
             let index = i;
              id.replies.forEach( (rep, j) => {
-               console.log('rep', rep);
+               //console.log('rep', rep);
               if(rep._id == req.body.reply_id && rep.delete_password == req.body.delete_password) {
-                console.log('found')
+                //console.log('found')
                 rep.text = '[deleted]';
                 rep.created_on = new Date().toString();
                 id.bumped_on = rep.created_on;
                 reply.save((err, success) => {
                 }, {new: true});
-                
+                response = 'success';
                } else {
-                 res.send('incorrect password');
-               }
+               response = 'incorrect password'; 
+               }     
              })
-            //res.json(reply.content[i])
           }
         });
-       })
-
+      res.send(response);
+    })
   };         
   
 };

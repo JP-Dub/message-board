@@ -127,7 +127,7 @@
             data: $(this).serialize(),
             success: function(data) { 
               alert(data)
-              res.redirect('/b/' +currentBoard);
+              window.location.reload(true);
             }
           });
           e.preventDefault();
