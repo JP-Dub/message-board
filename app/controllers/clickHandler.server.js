@@ -113,8 +113,7 @@ function ClickHandler() {
         show.content.forEach( (id, i) => {
           if(id._id == req.query.thread_id) {
             console.log(show.content[i])
-            let content = show.content[i];
-            
+            let content = show.content[i];            
             
             res.json(content)
           }
