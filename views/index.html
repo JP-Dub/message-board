@@ -108,9 +108,10 @@
           success: (data) => {
             console.log(data)
             data.forEach(arr => {
-              
-            }
-           // $('#userBoards').unshift
+              if(arr.board !== 'general') {
+                $('#userBoards').append('<li class="list"><a href="/b/' + arr.board + '"/">' + arr.board +'</a></li>')
+              }            
+            });        
           }
         });
         $('#newThread').submit(function(){

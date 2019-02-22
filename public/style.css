@@ -56,6 +56,10 @@ body {
   width: 80%;
 }
 
+.list {
+  margin-left: 40px;
+}
+
 #if_container {
   margin-top: -5px;
   padding-bottom: 23px;
