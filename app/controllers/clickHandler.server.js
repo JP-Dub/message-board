@@ -40,7 +40,7 @@ function ClickHandler() {
           arr.replies.splice(3);
         });
       
-       res.json([board])
+       res.json(board)
     });
   };
 

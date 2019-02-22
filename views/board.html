@@ -39,16 +39,17 @@
         $.ajax({
           type: "GET",
           url: url,
-          success: function(data)
+          success: function(obj)
           {
             var boardThreads= [];
-            console.log('data', data)
+            console.log('data', obj)
+            data = [obj];
             //
             // THIS ARRAY SET UP IS FOR CODE READABILITIES AND TESTING!
             // THIS IS NOT WHAT IT WOULD LOOK LIKE TO GO LIVE
             //
             data[0].content.forEach(function(ele) {
-                //console.log(ele);//can I use typeScript please?!
+                console.log(ele);//can I use typeScript please?!
                 var thread = ['<div class="thread">'];
                 thread.push('<div class="main">')             
                 thread.push('<p class="id">id: '+ele._id+'<br>('+ele.created_on+')</p><h3>'+ele.text+'</h3>');
