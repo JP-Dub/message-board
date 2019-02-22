@@ -3,8 +3,21 @@
 var Threads = require('../models/users.js');
 
 function ClickHandler() {
+  
+/* ///  app.route('api/boards')  \\\  */
+  
+  
+  this.userBoards = (req, res) => {
+    Threads
+      .find({}).exec((err, boards) => {
+      console.log(boards)
+      res.json(boards);
+    });
+                     
+  };
+  
  
-/* /// app.route('/api/threads/:board')  \\\ */  
+/* ///  app.route('/api/threads/:board')  \\\ */  
   
   
   this.recentThreads = (req, res) => {
@@ -110,7 +123,7 @@ function ClickHandler() {
   };  
   
   
-/*  /// app.route('/api/replies/:board')  \\\  */  
+/*  ///  app.route('/api/replies/:board')  \\\  */  
   
   
   this.showReplies = (req, res) => {

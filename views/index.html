@@ -102,6 +102,17 @@
             crossorigin="anonymous"></script>
     <script>
       $(function() {
+        $.ajax({
+          type: "GET",
+          url : 'api/boards',
+          success: (data) => {
+            console.log(data)
+            data.forEach(arr => {
+              
+            }
+           // $('#userBoards').unshift
+          }
+        });
         $('#newThread').submit(function(){
           var board = $('#board1').val();
           $(this).attr('action', "/api/threads/" + board);
