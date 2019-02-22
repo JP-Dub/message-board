@@ -48,7 +48,7 @@ function ClickHandler() {
   };
 
   this.createThreads = (req, res) => {
-    console.log('createThreads', req.body)
+    //console.log('createThreads', req.body)
     Threads
       .findOne({board: req.body.board})
       .exec( (err, threads) => {

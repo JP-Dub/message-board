@@ -27,13 +27,29 @@ suite('Functional Tests', function() {
             delete_password: 'test'
            }) 
           .end(function(err, res){
-           console.log(res.status, res.text)
             assert.equal(res.status, 200);
-            // assert.isObject(res.body, 'should return and object');
-            // assert.propertyVal(res.body.board, 'board', 'Testing');         
+            assert.equal(res.type, 'text/html');       
             done();
           });
       });      
+    });
+    
+    suite('GET', function() {
+      test('GET Board that we just created', function(done) {
+         chai.request(server)
+          .get('/api/threads/Testing/')
+          // .send({
+          //   board: 'Testing',
+          //   text : 'Testing...1,2,3',
+          //   delete_password: 'test'
+          //  }) 
+          .end(function(err, res){
+            console.log(res.body)
+            assert.equal(res.status, 200);
+            assert.equal(res.type, 'text/html');       
+            done();
+          });
+      });        
     });
     
     suite('Delete Board', function() {
@@ -48,11 +64,7 @@ suite('Functional Tests', function() {
             done();
           });
       });      
-    });    
-    
-    suite('GET', function() {
-      
-    });
+    });        
     
     suite('DELETE', function() {
       
