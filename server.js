@@ -42,6 +42,7 @@ app.route('/b/:board/')
   .get(function (req, res) {
     res.sendFile(process.cwd() + '/views/board.html');
   });
+
 app.route('/b/:board/:threadid')
   .get(function (req, res) {
     res.sendFile(process.cwd() + '/views/thread.html');
@@ -69,6 +70,7 @@ apiRoutes(app);
     
 //404 Not Found Middleware
 app.use(function(req, res, next) {
+  res.type(');
   res.status(404)
     .type('text')
     .send('Not Found');

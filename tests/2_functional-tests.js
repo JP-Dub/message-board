@@ -27,7 +27,6 @@ suite('Functional Tests', function() {
             delete_password: 'test'
            }) 
           .end(function(err, res){
-          
             assert.equal(res.status, 200);
             assert.equal(res.type, 'text/html'); 
             assert.typeOf(res.text, 'string', 'response is string');
@@ -40,7 +39,6 @@ suite('Functional Tests', function() {
     suite('GET', function() {
       test('Redirect to board/thread that we just created using GET', function(done) {
          chai.request(server)
-          .is('json')
           .get('/b/Testing/')
           .send({
             board: 'Testing',
