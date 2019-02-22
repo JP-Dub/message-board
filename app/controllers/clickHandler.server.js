@@ -13,14 +13,11 @@ function ClickHandler() {
       .findOne({board: req.params.board})
       .exec( (err, board) => {
         if(err) throw err;
-       // console.log(content)
-       board.content.forEach(arr => {
-         console.log('arr', arr)
-         arr.replies.splice(4);
+        board.content.forEach(arr => {
+          arr.replies.splice(3);
        });
       
-        res.json([board])
-       
+       res.json([board])
     });
   };
 
@@ -63,14 +60,15 @@ function ClickHandler() {
   };
   
   this.reportThreads = (req, res) => {
-   console.log('reportThreads', req.body)
+   //console.log('reportThreads', req.body)
     Threads.findOne({board: req.params.board })
       .exec((err, board) => {
-      console.log('board', board);
+      //console.log('board', board);
       let response = 'error';
       board.content.forEach(reply => {
         if(reply.id == req.body.report_id) {
           console.log('reply', reply)
+          if(reply.reported === true) return response = 'This thread has already been reported!';
           reply.reported = true;
           board.save((err, success) => {
             if(err) throw err;
@@ -164,6 +162,7 @@ function ClickHandler() {
         console.log('reply', reply)
           reply.replies.forEach(val => {
             if(val._id == req.body.reply_id) {
+              if(reply.reported === true) return response = 'This reply has already been reported!';
             console.log('val', val)
               val.reported = true;
               board.save((err, success) => {
@@ -180,25 +179,26 @@ function ClickHandler() {
   
   this.changeReply = (req, res) => {
     //console.log('changeReply', req.body)
-    Threads.findOne({ board : req.params.board })  
-    .exec((err, reply) => {
+    Threads
+      .findOne({ board : req.params.board })  
+      .exec((err, reply) => {
         if(err) throw err; 
         let response = 'incorrect password'; 
+        
         reply.content.forEach( (id, i) => {
-          if(id._id == req.body.thread_id) {
-            let index = i;
-             id.replies.forEach( (rep) => {
-               //console.log('rep', rep);
-              if(rep._id == req.body.reply_id && rep.delete_password == req.body.delete_password) {
-                //console.log('found')
-                rep.text = '[deleted]';
-                rep.created_on = new Date().toString();
-                id.bumped_on = rep.created_on;
+          if(id._id == req.body.thread_id) {           
+             
+            id.replies.forEach(rep => { 
+               if(rep._id == req.body.reply_id 
+                 && rep.delete_password == req.body.delete_password) {
+                 rep.text = '[deleted]';
+                 rep.created_on = new Date().toString();
+                 id.bumped_on = rep.created_on;
                 
-                reply.save((err, success) => {
-                  if(err) throw err;
-                }, {new: true});
-                return response = 'success';
+                 reply.save((err, success) => {
+                   if(err) throw err;
+                 }, {new: true});
+                 return response = 'success';
                }    
              })
           }
