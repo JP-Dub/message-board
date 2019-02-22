@@ -27,9 +27,11 @@ suite('Functional Tests', function() {
             delete_password: 'test'
            }) 
           .end(function(err, res){
-           console.log(res)
+           //console.log(res.redirects)
             assert.equal(res.status, 200);
-            assert.equal(res.type, 'text/html');       
+            assert.equal(res.type, 'text/html'); 
+            assert.typeOf(res.text, 'string', 'response is string');
+            assert.isDefined(res.redirects[0], 'array contains a defined item');
             done();
           });
       });      
@@ -42,10 +44,11 @@ suite('Functional Tests', function() {
           .send({
             board: 'Testing',
            }) 
-          .end(function(err, res){
-            
+          .end(function(err, res){  
+           console.log(res)
             assert.equal(res.status, 200);
-            assert.equal(res.type, 'text/html');       
+            assert.equal(res.type, 'text/html');
+            assert.typeOf(res.text, 'string', 'response is string');
             done();
           });
       });        

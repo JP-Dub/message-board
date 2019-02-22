@@ -10,19 +10,16 @@ function ClickHandler() {
   this.userBoards = (req, res) => {
     Threads
       .find({}).exec((err, boards) => {
-      if(err) throw err;
-      
+      if(err) throw err;     
       res.json(boards);
     });                     
   };
   
   this.deleteBoard = (req, res) => {
-    console.log(req.body)
     Threads
       .findOneAndDelete({board: req.body.board})
       .exec((err, boards) => {
       if(err) throw err;
-      //console.log('delete board', boards);
       if(!boards) return res.status(400)
       res.status(202).json(boards);
     });   
