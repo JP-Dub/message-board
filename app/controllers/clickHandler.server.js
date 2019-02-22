@@ -38,7 +38,7 @@ function ClickHandler() {
         if(err) throw err;
         board.content.forEach(arr => {
           arr.replies.splice(3);
-       });
+        });
       
        res.json([board])
     });
@@ -82,7 +82,7 @@ function ClickHandler() {
   };
   
   this.reportThreads = (req, res) => {
-   console.log('reportThreads', req.body, req.)
+   console.log('reportThreads', req.body, req.params)
     Threads
       .findOne({board: req.params.board })
       .exec((err, board) => {
