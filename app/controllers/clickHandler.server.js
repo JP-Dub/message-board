@@ -62,23 +62,22 @@ function ClickHandler() {
   };
   
   this.deleteThreads = (req, res) => {
-    console.log('deleteThreads', req.body, req.params)
+    //console.log('deleteThreads', req.body, req.params)
     Threads
       .findOne({board: req.params.board})
       .exec((err, board) => {
       if(err) throw err;
       //console.log(thread.content)
-      let response;
+      let response = 'incorrect password';
       board.content.forEach( (thread, i) => {
         if(thread._id == req.body.thread_id && thread.delete_password === req.body.delete_password) {  
-          response = 'success';
+          console.log('success!');
           board.content.splice(i, 1);          
           board.save((err, success) => {
             if(err) throw err;
-          });             
-        } else {
-          response = 'incorrect password';
-        }
+          }); 
+          return response = 'success';
+        } 
       });
       res.send(response);
     });
@@ -138,6 +137,11 @@ function ClickHandler() {
   
   this.reportReply = (req, res) => {
     console.log('reportReply', req.body)
+    Threads.findOne({board: req.params.board })
+      .exec((err, board) => {
+    
+    
+    });
   };     
   
   this.changeReply = (req, res) => {
@@ -145,24 +149,23 @@ function ClickHandler() {
     Threads.findOne({ board : req.params.board })  
     .exec((err, reply) => {
         if(err) throw err; 
-        let response;
+        let response = 'incorrect password'; 
         reply.content.forEach( (id, i) => {
           if(id._id == req.body.thread_id) {
             let index = i;
-             id.replies.forEach( (rep, j) => {
+             id.replies.forEach( (rep) => {
                //console.log('rep', rep);
               if(rep._id == req.body.reply_id && rep.delete_password == req.body.delete_password) {
                 //console.log('found')
                 rep.text = '[deleted]';
                 rep.created_on = new Date().toString();
                 id.bumped_on = rep.created_on;
+                
                 reply.save((err, success) => {
                   if(err) throw err;
                 }, {new: true});
-                response = 'success';
-               } else {
-               response = 'incorrect password'; 
-               }     
+                return response = 'success';
+               }    
              })
           }
         });
