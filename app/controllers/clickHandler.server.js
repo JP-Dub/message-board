@@ -11,7 +11,7 @@ function ClickHandler() {
     Threads
       .find({}).exec((err, boards) => {
       if(err) throw err;     
-      res.json(boards);
+      return res.json(boards);
     });                     
   };
   
@@ -21,7 +21,7 @@ function ClickHandler() {
       .exec((err, boards) => {
       if(err) throw err;
       if(!boards) return res.status(400)
-      res.status(202).json(boards);
+      return res.status(202).json(boards);
     });   
         
   };
@@ -40,7 +40,7 @@ function ClickHandler() {
           arr.replies.splice(3);
         });
       
-       res.json(board)
+       return res.json(board)
     });
   };
 
@@ -78,7 +78,7 @@ function ClickHandler() {
       
     });
 
-    res.redirect('/b/' + req.body.board +'/')
+    return res.redirect('/b/' + req.body.board +'/')
   };
   
   this.reportThreads = (req, res) => {
@@ -103,7 +103,7 @@ function ClickHandler() {
             return response = 'success';
           }   
         });
-        res.send(response);
+        return res.send(response);
     });    
   };
   
@@ -128,7 +128,7 @@ function ClickHandler() {
           return response = 'success';
         }; 
       });
-      res.send(response);
+      return res.send(response);
     });
   };  
   
@@ -175,7 +175,7 @@ function ClickHandler() {
       
         update.save(err => {
           if(err) throw err;
-          res.redirect('/b/' + req.params.board + '/' + req.body.thread_id);
+          return res.redirect('/b/' + req.params.board + '/' + req.body.thread_id);
         });    
     });
   };   
@@ -206,7 +206,7 @@ function ClickHandler() {
             });
           };
         });
-    res.send(response);
+        return res.send(response);
     });
   };     
   
@@ -238,7 +238,7 @@ function ClickHandler() {
              });
           };
         });
-        res.send(response);
+        return res.send(response);
     });
   };         
   
