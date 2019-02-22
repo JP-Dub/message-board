@@ -115,7 +115,10 @@
             type: "DELETE",
             url: url,
             data: $(this).serialize(),
-            success: function(data) { alert(data) }
+            success: function(data) { 
+              alert(data)
+              window.location.reload(true);
+            }
           });
           e.preventDefault();
         });        

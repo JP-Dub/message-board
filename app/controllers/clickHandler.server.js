@@ -65,17 +65,22 @@ function ClickHandler() {
     console.log('deleteThreads', req.body, req.params)
     Threads
       .findOne({board: req.params.board})
-      .exec((err, thread) => {
+      .exec((err, board) => {
       if(err) throw err;
       //console.log(thread.content)
-      let index;
-      thread.content.forEach( (thread, i) => {
-        if(thread._id == req.body.thread_id && thread.delete_password === req.body.thread) {
-       console.log('thread', thread)
-        index = i;
+      let response;
+      board.content.forEach( (thread, i) => {
+        if(thread._id == req.body.thread_id && thread.delete_password === req.body.delete_password) {  
+          response = 'success';
+          board.content.splice(i, 1);          
+          board.save((err, success) => {
+            if(err) throw err;
+          });             
+        } else {
+          response = 'incorrect password';
         }
       });
-     //console.log('index', thread.content.splice(index, 1), thread.content[index])
+      res.send(response);
     });
   };  
   
@@ -152,6 +157,7 @@ function ClickHandler() {
                 rep.created_on = new Date().toString();
                 id.bumped_on = rep.created_on;
                 reply.save((err, success) => {
+                  if(err) throw err;
                 }, {new: true});
                 response = 'success';
                } else {
