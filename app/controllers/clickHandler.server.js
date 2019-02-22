@@ -10,10 +10,9 @@ function ClickHandler() {
   this.userBoards = (req, res) => {
     Threads
       .find({}).exec((err, boards) => {
-      console.log(boards)
+      if(err) throw err;
       res.json(boards);
-    });
-                     
+    });                     
   };
   
  
@@ -21,7 +20,7 @@ function ClickHandler() {
   
   
   this.recentThreads = (req, res) => {
-    console.log('recentThreads', req.body, req.params, req.query)
+    //console.log('recentThreads', req.body, req.params, req.query)
     Threads
       .findOne({board: req.params.board})
       .exec( (err, board) => {
@@ -35,12 +34,12 @@ function ClickHandler() {
   };
 
   this.createThreads = (req, res) => {
-    //console.log('createThreads', req.body)
+    console.log('createThreads', req.body)
     Threads
       .findOne({board: req.body.board})
       .exec( (err, threads) => {
         if(err) throw err;
-        console.log('threads', threads.content)
+        console.log('threads', threads)
 
         let board = threads;
         let num   = !threads ? 1 

@@ -37,7 +37,7 @@
       <br><br>
       <h2><a href='/b/general/'>Go to testing <i>'/b/general/'</i> board</a></h2><br>
       <ul id="userBoards">
-        Created Boards
+        User Created Boards
       </ul>
       
     </div>
@@ -106,7 +106,6 @@
           type: "GET",
           url : 'api/boards',
           success: (data) => {
-            console.log(data)
             data.forEach(arr => {
               if(arr.board !== 'general') {
                 $('#userBoards').append('<li class="list"><a href="/b/' + arr.board + '"/">' + arr.board +'</a></li>')
