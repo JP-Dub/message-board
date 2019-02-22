@@ -10,11 +10,16 @@ function ClickHandler() {
   this.recentThreads = (req, res) => {
     console.log('recentThreads', req.body, req.params, req.query)
     Threads
-      .find({board: req.params.board})
-      .exec( (err, threads) => {
+      .findOne({board: req.params.board})
+      .exec( (err, board) => {
         if(err) throw err;
-        
-        res.json(threads)
+       // console.log(content)
+       board.content.forEach(arr => {
+         console.log('arr', arr)
+         arr.replies.splice(4);
+       });
+      
+        res.json([board])
        
     });
   };
