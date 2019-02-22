@@ -61,19 +61,19 @@ function ClickHandler() {
    console.log('reportThreads', req.body)
     Threads.findOne({board: req.params.board })
       .exec((err, board) => {
-      //console.log('board', board);
+      console.log('board', board);
       let response = 'error';
       board.content.forEach(reply => {
-        if(reply.id == req.body.thread_id) {
-        console.log('reply', reply)
-          
-              // board.save((err, success) => {
-              //   if(err) throw err;
-              // });
-              //return response = 'success';
+        if(reply.id == req.body.report_id) {
+          console.log('reply', reply)
+          reply.reported = true;
+          board.save((err, success) => {
+            if(err) throw err;
+          });
+          return response = 'success';
         }   
       });
-    //res.send(response);
+    res.send(response);
     });    
   };
   
