@@ -82,7 +82,7 @@ function ClickHandler() {
   };
   
   this.reportThreads = (req, res) => {
-   //console.log('reportThreads', req.body)
+   console.log('reportThreads', req.body, req.)
     Threads
       .findOne({board: req.params.board })
       .exec((err, board) => {

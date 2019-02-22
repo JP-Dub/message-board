@@ -52,7 +52,41 @@ suite('Functional Tests', function() {
             done();
           });
       });        
+    });      
+    
+    suite('PUT', function() {
+      test('Test "report" button function on a thread', function(done) {
+         chai.request(server)
+          .put('/b/Testing/')
+          .send({
+            board: 'Testing',
+           }) 
+          .end(function(err, res){  
+           //console.log(res)
+            assert.equal(res.status, 200);
+            assert.equal(res.type, 'text/html');
+            assert.typeOf(res.text, 'string', 'response is string');
+            done();
+          });
+      });       
     });
+    
+    suite('DELETE', function() {
+      test('Redirect to board/thread that we just created using GET', function(done) {
+         chai.request(server)
+          .delete('/b/Testing/')
+          .send({
+            board: 'Testing',
+           }) 
+          .end(function(err, res){  
+           //console.log(res)
+            assert.equal(res.status, 200);
+            assert.equal(res.type, 'text/html');
+            assert.typeOf(res.text, 'string', 'response is string');
+            done();
+          });
+      });       
+    });    
     
     suite('Delete Board', function() {
       test('Delete the Test Board', function(done) {
@@ -66,16 +100,7 @@ suite('Functional Tests', function() {
             done();
           });
       });      
-    });        
-    
-    suite('DELETE', function() {
-      
-    });
-    
-    suite('PUT', function() {
-      
-    });
-    
+    });  
 
   });
   
