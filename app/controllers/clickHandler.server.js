@@ -59,6 +59,22 @@ function ClickHandler() {
   
   this.reportThreads = (req, res) => {
    console.log('reportThreads', req.body)
+    Threads.findOne({board: req.params.board })
+      .exec((err, board) => {
+      //console.log('board', board);
+      let response = 'error';
+      board.content.forEach(reply => {
+        if(reply.id == req.body.thread_id) {
+        console.log('reply', reply)
+          
+              // board.save((err, success) => {
+              //   if(err) throw err;
+              // });
+              //return response = 'success';
+        }   
+      });
+    //res.send(response);
+    });    
   };
   
   this.deleteThreads = (req, res) => {
@@ -113,7 +129,6 @@ function ClickHandler() {
       .findOne({board : req.params.board})
       .exec( (err, update) => {
         if(err) throw err;
-        //console.log(update)
       
         update.content.forEach( (id, i) => {
           if(id._id == req.body.thread_id) {
@@ -130,8 +145,7 @@ function ClickHandler() {
       
         update.save((err, success) => {
           res.redirect('/b/' + req.params.board + '/' + req.body.thread_id);
-        });
-       //res.redirect('/b/' + req.params.board + '/' + req.body.thread_id);      
+        });    
     });
   };   
   
@@ -139,8 +153,24 @@ function ClickHandler() {
     console.log('reportReply', req.body)
     Threads.findOne({board: req.params.board })
       .exec((err, board) => {
-    
-    
+      //console.log('board', board);
+      let response = 'error';
+      board.content.forEach(reply => {
+        if(reply.id == req.body.thread_id) {
+        console.log('reply', reply)
+          reply.replies.forEach(val => {
+            if(val._id == req.body.reply_id) {
+            console.log('val', val)
+              val.reported = true;
+              board.save((err, success) => {
+                if(err) throw err;
+              });
+              return response = 'success';
+            }
+          });
+        }
+      });
+    res.send(response);
     });
   };     
   
