@@ -126,85 +126,95 @@ function ClickHandler() {
   }; 
 
   this.createReply = (req, res) => {
-    //console.log('createReply', req.body, req.params)
+    
     Threads
       .findOne({board : req.params.board})
       .exec( (err, update) => {
         if(err) throw err;
       
         update.content.forEach( (id, i) => {
+          
           if(id._id == req.body.thread_id) {
-            update.content[i].replies.push({
+            console.log('id.replies', id.replies, update.content[i].replies)
+            update.content[i].replies.unshift({
               text           : req.body.text,
               created_on     : new Date().toString(),
               reported       : false,
               delete_password: req.body.delete_password  
             });
-            update.content[i].bumped_on = new Date().toString();
-            update.content[i].replycount+= 1;
-          }
+            
+            update.content[i].bumped_on   = new Date().toString();
+            update.content[i].replycount += 1;
+          };
         });
       
-        update.save((err, success) => {
+        update.save(err => {
+          if(err) throw err;
           res.redirect('/b/' + req.params.board + '/' + req.body.thread_id);
         });    
     });
   };   
   
   this.reportReply = (req, res) => {
-    console.log('reportReply', req.body)
-    Threads.findOne({board: req.params.board })
+    
+    Threads
+      .findOne({board: req.params.board })
       .exec((err, board) => {
-      //console.log('board', board);
-      let response = 'error';
-      board.content.forEach(reply => {
-        if(reply.id == req.body.thread_id) {
-        console.log('reply', reply)
-          reply.replies.forEach(val => {
-            if(val._id == req.body.reply_id) {
-              if(reply.reported === true) return response = 'This reply has already been reported!';
-            console.log('val', val)
-              val.reported = true;
-              board.save((err, success) => {
-                if(err) throw err;
-              });
-              return response = 'success';
-            }
-          });
-        }
-      });
+        if(err) throw err;
+      
+        let response = 'error';
+        board.content.forEach(reply => {
+          
+          if(reply.id == req.body.thread_id) {        
+            reply.replies.forEach(val => {
+              
+              if(val._id == req.body.reply_id) {
+                if(reply.reported === true) return response = 'This reply has already been reported!';             
+                val.reported = true;
+                
+                board.save((err, success) => {
+                  if(err) throw err;
+                });
+                
+                return response = 'success';
+              };
+            });
+          };
+        });
     res.send(response);
     });
   };     
   
   this.changeReply = (req, res) => {
-    //console.log('changeReply', req.body)
+    
     Threads
       .findOne({ board : req.params.board })  
       .exec((err, reply) => {
         if(err) throw err; 
-        let response = 'incorrect password'; 
         
-        reply.content.forEach( (id, i) => {
-          if(id._id == req.body.thread_id) {           
-             
+        let response = 'incorrect password'; 
+        reply.content.forEach(id => {
+          
+          if(id._id == req.body.thread_id) {              
             id.replies.forEach(rep => { 
-               if(rep._id == req.body.reply_id 
-                 && rep.delete_password == req.body.delete_password) {
-                 rep.text = '[deleted]';
+               
+              if(rep._id == req.body.reply_id 
+              && rep.delete_password == req.body.delete_password) {
+                 rep.text       = '[deleted]';
                  rep.created_on = new Date().toString();
-                 id.bumped_on = rep.created_on;
+                 id.bumped_on   = rep.created_on;
                 
                  reply.save((err, success) => {
                    if(err) throw err;
                  }, {new: true});
+                
                  return response = 'success';
-               }    
-             })
-          }
+               };    
+             });
+          };
         });
-      res.send(response);
-    })
+        res.send(response);
+    });
   };         
   
 };
