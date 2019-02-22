@@ -18,7 +18,7 @@ suite('Functional Tests', function() {
   suite('API ROUTING FOR /api/threads/:board', function() {
     
     suite('POST', function() {
-      test('Start a new thread', function(done) {
+      test('Start a new board/board using POST', function(done) {
          chai.request(server)
           .post('/api/threads/Testing')
           .send({
@@ -27,6 +27,7 @@ suite('Functional Tests', function() {
             delete_password: 'test'
            }) 
           .end(function(err, res){
+           console.log(res)
             assert.equal(res.status, 200);
             assert.equal(res.type, 'text/html');       
             done();
@@ -35,16 +36,14 @@ suite('Functional Tests', function() {
     });
     
     suite('GET', function() {
-      test('GET Board that we just created', function(done) {
+      test('Redirect to board/thread that we just created using GET', function(done) {
          chai.request(server)
-          .get('/api/threads/Testing/')
-          // .send({
-          //   board: 'Testing',
-          //   text : 'Testing...1,2,3',
-          //   delete_password: 'test'
-          //  }) 
+          .get('/b/Testing/')
+          .send({
+            board: 'Testing',
+           }) 
           .end(function(err, res){
-            console.log(res.body)
+            
             assert.equal(res.status, 200);
             assert.equal(res.type, 'text/html');       
             done();
