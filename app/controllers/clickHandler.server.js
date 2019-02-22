@@ -39,7 +39,7 @@ function ClickHandler() {
         board.content.forEach(arr => {
           arr.replies.splice(3);
         });
-      
+       res.set('Content-Type', 'json')
        res.json(board)
     });
   };
