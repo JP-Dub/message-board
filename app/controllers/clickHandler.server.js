@@ -22,7 +22,8 @@ function ClickHandler() {
       .findOneAndDelete({board: req.body.board})
       .exec((err, boards) => {
       if(err) throw err;
-      
+      console.log('delete board', boards);
+      if(!boards) return res.status(400)
       res.status(202).json(boards);
     });   
         
@@ -52,7 +53,7 @@ function ClickHandler() {
       .findOne({board: req.body.board})
       .exec( (err, threads) => {
         if(err) throw err;
-        console.log('threads', threads)
+        //console.log('threads', threads)
 
         let board = threads;
         let num   = !threads ? 1 
