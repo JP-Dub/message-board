@@ -67,8 +67,15 @@ function ClickHandler() {
       .findOne({board: req.params.board})
       .exec((err, thread) => {
       if(err) throw err;
-      console.log(thread.content)
-      thread.content.forEach(
+      //console.log(thread.content)
+      let index;
+      thread.content.forEach( (thread, i) => {
+        if(thread._id == req.body.thread_id && thread.delete_password === req.body.thread) {
+       console.log('thread', thread)
+        index = i;
+        }
+      });
+     //console.log('index', thread.content.splice(index, 1), thread.content[index])
     });
   };  
   
