@@ -19,22 +19,36 @@ suite('Functional Tests', function() {
     
     suite('POST', function() {
       test('Start a new thread', function(done) {
-       chai.request(server)
-        .post('/api/threads/:board')
-        .send({
-          board: 'Testing',
-          text : 'Testing...1,2,3',
-          delete_password: 'test'
-         }) 
-        .end(function(err, res){
-         console.log(res.body)
-          assert.equal(res.status, 200);
-          assert.isObject(res.body, 'should return and object');
-          assert.propertyVal(res.body.board, 'board', 'Testing');         
-          done();
-        });
+         chai.request(server)
+          .post('/api/threads/:board')
+          .send({
+            board: 'Testing',
+            text : 'Testing...1,2,3',
+            delete_password: 'test'
+           }) 
+          .end(function(err, res){
+           console.log(res.body)
+            assert.equal(res.status, 200);
+            assert.isObject(res.body, 'should return and object');
+            assert.propertyVal(res.body.board, 'board', 'Testing');         
+            done();
+          });
       });      
     });
+    
+    suite('Delete Board', function() {
+      test('Delete the Test Board', function(done) {
+         chai.request(server)
+          .delete('/api/boards')
+          .send({
+            board: 'Testing',
+           }) 
+          .end(function(err, res){
+            assert.equal(res.status, 202);
+            done();
+          });
+      });      
+    });    
     
     suite('GET', function() {
       

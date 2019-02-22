@@ -108,7 +108,7 @@
           success: (data) => {
             data.forEach(arr => {
               if(arr.board !== 'general') {
-                $('#userBoards').append('<li class="list"><a href="/b/' + arr.board + '"/">' + arr.board +'</a></li>')
+                $('#userBoards').append('<li id="'+arr._id+'" class="list"><a href="/b/'+arr.board+'"/">'+arr.board+'</a></li>');
               }            
             });        
           }

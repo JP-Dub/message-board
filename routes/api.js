@@ -18,7 +18,8 @@ module.exports = function (app) {
   let clickHandler = new ClickHandler();
   
   app.route('/api/boards')
-      .get(clickHandler.userBoards);
+      .get(clickHandler.userBoards)
+      .delete(clickHandler.deleteBoard);
   
   app.route('/api/threads/:board')
       .get(clickHandler.recentThreads)
