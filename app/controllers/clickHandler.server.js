@@ -89,14 +89,17 @@ function ClickHandler() {
       //console.log(thread.content)
       let response = 'incorrect password';
       board.content.forEach( (thread, i) => {
-        if(thread._id == req.body.thread_id && thread.delete_password === req.body.delete_password) {  
-          console.log('success!');
+        if(thread._id == req.body.thread_id 
+        && thread.delete_password === req.body.delete_password) {  
+          //console.log('success!');
           board.content.splice(i, 1);          
-          board.save((err, success) => {
+          
+          board.save(err, success) => {
             if(err) throw err;
           }); 
+          
           return response = 'success';
-        } 
+        }; 
       });
       res.send(response);
     });
@@ -107,22 +110,18 @@ function ClickHandler() {
   
   
   this.showReplies = (req, res) => {
-    console.log('showReplies', req.body, req.params, req.query)
+    //console.log('showReplies', req.body, req.params, req.query)
     Threads
       .findOne({board: req.params.board})
-      .exec( (err, show) => {
+      .exec( (err, view) => {
         if(err) throw err;
-      //console.log('show', show)
-        show.content.forEach( (id, i) => {
-          if(id._id == req.query.thread_id) {
-            console.log(show.content[i])
-            let content = show.content[i];            
-            
-            res.json(content)
-          }
+        //console.log('show', show)
+        view.content.forEach(replies => {
+          if(replies._id == req.query.thread_id) {           
+            res.json(replies);
+          };
         });
     });
-    //res.json(showReplies)
   }; 
 
   this.createReply = (req, res) => {
@@ -131,20 +130,19 @@ function ClickHandler() {
       .findOne({board : req.params.board})
       .exec( (err, update) => {
         if(err) throw err;
-      
-        update.content.forEach( (id, i) => {
+        console.log(update.content)
+        update.content.forEach(content => {
           
-          if(id._id == req.body.thread_id) {
-            console.log('id.replies', id.replies, update.content[i].replies)
-            update.content[i].replies.unshift({
+          if(content._id == req.body.thread_id) {          
+            content.replies.unshift({
               text           : req.body.text,
               created_on     : new Date().toString(),
               reported       : false,
               delete_password: req.body.delete_password  
             });
             
-            update.content[i].bumped_on   = new Date().toString();
-            update.content[i].replycount += 1;
+            content.bumped_on   = new Date().toString();
+            content.replycount += 1;
           };
         });
       
