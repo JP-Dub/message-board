@@ -22,61 +22,65 @@ function ClickHandler() {
   };
 
   this.createThreads = (req, res) => {
-    console.log('createThreads', req.body)
+    //console.log('createThreads', req.body)
     Threads
       .findOne({board: req.body.board})
-      //.sort({'thread_id': -1})
       .exec( (err, threads) => {
-      if(err) throw err;
-       //console.log('threads', threads)
-     
-      let board = threads;
-      let num = !threads ? 0 : threads.content[threads.content.length-1].thread_id + 1;
-      if(!threads) { 
-        board = new Threads();
-        board.board = req.body.board;
-        num = 1;
-      }
-      
-      board.content.unshift({
-        thread_id : num,
-        text : req.body.text,
-        created_on : new Date().toString(),
-        bumped_on : new Date().toString(),
-        reported : false,
-        delete_password : req.body.delete_password,
-        replies : [],
-        replycount : 0
-      })
-        
-      board.save( (err, success) => {
         if(err) throw err;
-        //console.log(success)
-      });
+         //console.log('threads', threads)
+
+        let board = threads;
+        let num   = !threads ? 1 
+                    : threads.content[0].thread_id + 1;
+      
+        if(!threads) { 
+          board       = new Threads();
+          board.board = req.body.board;
+        }
+
+        board.content.unshift({
+          thread_id  : num,
+          text       : req.body.text,
+          created_on : new Date().toString(),
+          bumped_on  : new Date().toString(),
+          reported   : false,
+          delete_password : req.body.delete_password,
+          replies    : [],
+          replycount : 0
+        });
+
+        board.save(err => {
+          if(err) throw err;
+        });
       
     });
-    
+
     res.redirect('/b/' + req.body.board +'/')
   };
   
   this.reportThreads = (req, res) => {
    //console.log('reportThreads', req.body)
-    Threads.findOne({board: req.params.board })
+    Threads
+      .findOne({board: req.params.board })
       .exec((err, board) => {
-      //console.log('board', board);
-      let response = 'error';
-      board.content.forEach(reply => {
-        if(reply.id == req.body.report_id) {
-          console.log('reply', reply)
-          if(reply.reported === true) return response = 'This thread has already been reported!';
-          reply.reported = true;
-          board.save((err, success) => {
-            if(err) throw err;
-          });
-          return response = 'success';
-        }   
-      });
-    res.send(response);
+        if(err) throw err;
+        //console.log('board', board);
+        let response = 'error';
+        board.content.forEach(reply => {
+
+          if(reply.id == req.body.report_id) {
+            //console.log('reply', reply)
+            if(reply.reported === true) return response = 'This thread has already been reported!';
+            reply.reported = true;
+
+            board.save(err => {
+              if(err) throw err;
+            });
+
+            return response = 'success';
+          }   
+        });
+        res.send(response);
     });    
   };
   
@@ -94,7 +98,7 @@ function ClickHandler() {
           //console.log('success!');
           board.content.splice(i, 1);          
           
-          board.save(err, success) => {
+          board.save(err => {
             if(err) throw err;
           }); 
           
@@ -130,7 +134,7 @@ function ClickHandler() {
       .findOne({board : req.params.board})
       .exec( (err, update) => {
         if(err) throw err;
-        console.log(update.content)
+        //console.log(update.content)
         update.content.forEach(content => {
           
           if(content._id == req.body.thread_id) {          
