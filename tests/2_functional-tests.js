@@ -27,7 +27,7 @@ suite('Functional Tests', function() {
             delete_password: 'test'
            }) 
           .end(function(err, res){
-           //console.log(res.redirects)
+           console.log('res.url = ', res.statusCode)
             assert.equal(res.status, 200);
             assert.equal(res.type, 'text/html'); 
             assert.typeOf(res.text, 'string', 'response is string');
@@ -45,7 +45,7 @@ suite('Functional Tests', function() {
             board: 'Testing',
            }) 
           .end(function(err, res){  
-           console.log(res)
+           //console.log(res)
             assert.equal(res.status, 200);
             assert.equal(res.type, 'text/html');
             assert.typeOf(res.text, 'string', 'response is string');
