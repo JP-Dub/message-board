@@ -36,7 +36,10 @@ function ClickHandler() {
       .findOne({board: req.params.board})
       .exec( (err, board) => {
         if(err) throw err;
+        
+        if(board.content.length > 9) board.content.splice(10);
         board.content.forEach(arr => {
+         
           arr.replies.splice(3);
         });
       
