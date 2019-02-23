@@ -109,11 +109,15 @@
         });        
         $('#boardDisplay').on('submit','#deleteReply', function(e) {
           var url = "/api/replies/"+currentURL[0];
+          //var page = $('#threadTitle').val();
           $.ajax({
             type: "DELETE",
             url: url,
             data: $(this).serialize(),
-            success: function(data) { alert(data) }
+            success: function(data) { 
+              alert(data);
+              window.location.reload(true);
+            }
           });
           e.preventDefault();
         });              

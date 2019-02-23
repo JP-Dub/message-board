@@ -23,7 +23,7 @@ app.use(helmet({
     policy : 'same-origin'
   },
   dnsPrefetchControl : {
-    allow: true
+    allow: false
   }
 }));
 

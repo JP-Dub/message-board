@@ -45,8 +45,8 @@ suite('Functional Tests', function() {
           .send({
             board: 'Testing',
            }) 
-          .end(function(err, res, body){ 
-            console.log('res', res.header, body)
+          .end(function(err, res){ 
+            console.log('res', res.header)
             assert.equal(res.status, 200);
             assert.equal(res.type, 'text/html');
             assert.typeOf(res.text, 'string', 'response is string');
