@@ -154,6 +154,29 @@ suite('Functional Tests', function() {
       });      
     });
     
+        
+    
+    suite('DELETE', function() {
+      test('DELETE reply that was created', function(done) {
+         chai.request(server)
+          .delete('/b/Testing/')
+          .send({
+            board: 'Testing',
+            delete_password: reply_Id
+           }) 
+          .end(function(err, res){  
+           //console.log(res)
+    
+            let replies = res.body.content[0].replies[0];
+            assert.equal(res.status, 200);
+            assert.equal(               replies.text, 'Testing...1,2,3');
+            assert.notExists(       replies.reported, 'reported field is not being returned');
+            assert.notExists(replies.delete_password, 'delete_password field is not being returned');
+            done();
+          });
+      });         
+    });
+    
     suite('DELETE BOARD', function() {
       test('Delete the Test Board', function(done) {
          chai.request(server)
@@ -166,11 +189,7 @@ suite('Functional Tests', function() {
             done();
           });
       });      
-    });          
-    
-    suite('DELETE', function() {
-      
-    });
+    });      
     
   });
 

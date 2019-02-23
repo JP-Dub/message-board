@@ -88,7 +88,7 @@ function ClickHandler() {
   };
   
   this.reportThreads = (req, res) => {
-   //console.log('reportThreads', req.body, req.params)
+   console.log('Report Thread', req.body, req.params)
     Threads
       .findOne({board: req.params.board })
       .exec((err, board) => {
@@ -206,9 +206,9 @@ function ClickHandler() {
           
           if(reply.id == req.body.thread_id) {        
             reply.replies.forEach(val => {
-              
+              console.log('val' , val)
               if(val._id == req.body.reply_id) {
-                if(reply.reported === true) return response = 'This reply has already been reported!';             
+                if(val.reported === true) return response = 'This reply has already been reported!';             
                 val.reported = true;
                 
                 board.save((err, success) => {
