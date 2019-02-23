@@ -65,7 +65,7 @@ suite('Functional Tests', function() {
             report_id: thread_Id,
            }) 
           .end(function(err, res) {  
-            console.log('thread PUT request= ', res.text, thread_Id)
+            //console.log('thread PUT request= ', res.text, thread_Id)
             assert.equal(res.status, 200);
             assert.equal(  res.text, 'success');
             done();
@@ -121,17 +121,34 @@ suite('Functional Tests', function() {
     suite('GET', function() {
       test('GET the full thread and reveal all replies', function(done) {
          chai.request(server)
-          .get('/api/replies/Testing/' + thread_Id)
+          .get('/api/replies/Testing')
           .query({
             thread_id: thread_Id,
            }) 
           .end(function(err, res) { 
-           // reply_Id = res.body.content[0].replies[0]._id;
-            console.log('GET request to replies', res.body)
+            reply_Id = res.body.replies[0]._id;
+            //console.log('GET request to replies', res.body)
             assert.equal(res.status, 200);
-            // assert.equal(               res.body.content[0].replies[0].text, '...testing replies');
-            // assert.notExists(       res.body.content[0].replies[0].reported, 'reported field is not being returned');
-            // assert.notExists(res.body.content[0].replies[0].delete_password, 'delete_password field is not being returned');
+            assert.equal(               res.body.replies[0].text, '...testing replies');
+            assert.notExists(       res.body.replies[0].reported, 'reported field is not being returned');
+            assert.notExists(res.body.replies[0].delete_password, 'delete_password field is not being returned');
+            done();
+          });
+      });      
+    }); 
+    
+    suite('PUT', function() {
+      test('Test button function to report a thread', function(done) {
+         chai.request(server)
+          .put('/api/replies/Testing')
+          .send({
+            thread_id: thread_Id,
+            reply_id : reply_Id,
+           }) 
+          .end(function(err, res) {  
+            //console.log('thread PUT request= ', res.text, thread_Id)
+            assert.equal(res.status, 200);
+            assert.equal(  res.text, 'success');
             done();
           });
       });      
@@ -149,11 +166,7 @@ suite('Functional Tests', function() {
             done();
           });
       });      
-    });       
-    
-    suite('PUT', function() {
-      
-    });
+    });          
     
     suite('DELETE', function() {
       

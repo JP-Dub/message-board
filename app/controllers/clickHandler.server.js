@@ -146,8 +146,10 @@ function ClickHandler() {
     console.log('showReplies', req.body, req.params, req.query)
     Threads
       .findOne({board: req.params.board})
-      .select({'content.reported'        : 0, 
-               'content.delete_password' : 0 
+      .select({'content.reported'               : 0, 
+               'content.delete_password'        : 0,
+               'content.replies.reported'       : 0,
+               'content.replies.delete_password': 0
               })
       .exec( (err, view) => {
         if(err) throw err;
@@ -162,7 +164,7 @@ function ClickHandler() {
   }; 
 
   this.createReply = (req, res) => {
-    console.log('create reply', req.body, req.params)
+    //console.log('create reply', req.body, req.params)
     Threads
       .findOne({board : req.params.board})
       .exec( (err, update) => {
