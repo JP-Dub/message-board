@@ -42,9 +42,9 @@ suite('Functional Tests', function() {
       test('Redirect to board/thread that we just created using GET', function(done) {
          chai.request(server)
           .get('/api/threads/Testing')
-          .send({
-            board: 'Testing',
-           }) 
+          // .send({
+          //   board: 'Testing',
+          //  }) 
           .end(function(err, res) {  
             thread_Id = res.body.content[0]._id;
             assert.equal(res.status, 200);
@@ -102,7 +102,7 @@ suite('Functional Tests', function() {
     suite('POST', function() {
       test('Create a reply to the `Testing` thread', function(done) {
          chai.request(server)
-          .post('/api/replies/Testing/' + thread_Id)
+          .post('/api/replies/Testing')
           .send({
             thread_id: thread_Id,
             text: '...testing replies',
@@ -121,16 +121,17 @@ suite('Functional Tests', function() {
     suite('GET', function() {
       test('GET the full thread and reveal all replies', function(done) {
          chai.request(server)
-          .get('/api/replies/Testing')
-          .send({
+          .get('/api/replies/Testing/' + thread_Id)
+          .query({
             thread_id: thread_Id,
-            text: '...testing replies',
-            delete_password: 'replies'
            }) 
-          .end(function(err, res) {  
-            //console.log('POST request to reply', res.body, thread_Id, res.redirects, res.header)
-            assert.equal(          res.status, 200);
-            assert.isDefined(res.redirects[0], 'array contains a defined item');
+          .end(function(err, res) { 
+           // reply_Id = res.body.content[0].replies[0]._id;
+            console.log('GET request to replies', res.body)
+            assert.equal(res.status, 200);
+            // assert.equal(               res.body.content[0].replies[0].text, '...testing replies');
+            // assert.notExists(       res.body.content[0].replies[0].reported, 'reported field is not being returned');
+            // assert.notExists(res.body.content[0].replies[0].delete_password, 'delete_password field is not being returned');
             done();
           });
       });      
