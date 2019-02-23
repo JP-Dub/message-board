@@ -13,6 +13,9 @@ var server = require('../server');
 
 chai.use(chaiHttp);
 
+let thread_Id,
+    reply_Id;
+
 suite('Functional Tests', function() {
 
   suite('API ROUTING FOR /api/threads/:board', function() {
@@ -40,15 +43,16 @@ suite('Functional Tests', function() {
     suite('GET', function() {
       test('Redirect to board/thread that we just created using GET', function(done) {
          chai.request(server)
-          .get('/api/threads/b/Testing')
+          .get('/api/threads/Testing')
           //.set('Accept', 'json')
           .send({
             board: 'Testing',
            }) 
           .end(function(err, res){ 
-            console.log('res.body=', res.header)
+            console.log('res.body=', res.body)
+            thread_Id = res.body._id;
             assert.equal(res.status, 200);
-            // assert.equal(res.type, 'text/html');
+            assert.equal(res.body.text, 'Testing...1,2,3');
             // assert.typeOf(res.text, 'string', 'response is string');
             done();
           });
@@ -60,12 +64,11 @@ suite('Functional Tests', function() {
          chai.request(server)
           .put('api/threads/Testing/')
           .send({
-            report_id: 'Testing',
+            report_id: thread_Id,
            }) 
           .end(function(err, res){  
            //console.log(res)
             assert.equal(res.status, 200);
-            assert.equal(res.type, 'text/html');
             //assert.typeOf(res.text, 'string', 'response is string');
             done();
           });

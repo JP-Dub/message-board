@@ -34,9 +34,12 @@ function ClickHandler() {
     console.log('recentThreads', req.body, req.params,)
     Threads
       .findOne({board: req.params.board})
+      .select({'content.reported': 0, 
+               'content.delete_password':0
+              })
       .exec( (err, board) => {
         if(err) throw err;
-        
+        console.log(board)
         if(board.content.length > 9) board.content.splice(10);
         board.content.forEach(arr => {
          
@@ -145,7 +148,7 @@ function ClickHandler() {
       .findOne({board: req.params.board})
       .exec( (err, view) => {
         if(err) throw err;
-        //console.log('show', show)
+        console.log('show', view)
         view.content.forEach(replies => {
           if(replies._id == req.query.thread_id) {           
             res.json(replies);
