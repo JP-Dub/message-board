@@ -30,7 +30,7 @@ suite('Functional Tests', function() {
             text : 'Testing...1,2,3',
             delete_password: 'test'
            }) 
-          .end(function(err, res){
+          .end(function(err, res) {
             assert.equal( res.status, 200);
             assert.equal( res.type,   'text/html'); 
             assert.typeOf(res.text,   'string', 'response is string');
@@ -44,13 +44,11 @@ suite('Functional Tests', function() {
       test('Redirect to board/thread that we just created using GET', function(done) {
          chai.request(server)
           .get('/api/threads/Testing')
-          //.set('Accept', 'json')
           .send({
             board: 'Testing',
            }) 
-          .end(function(err, res){ 
-            thread_Id = res.body._id;
-           
+          .end(function(err, res) {  
+            thread_Id = res.body.content[0]._id;
             assert.equal(res.status, 200);
             assert.equal(    res.body.content[0].text,            'Testing...1,2,3');
             assert.notExists(res.body.content[0].reported,        'reported field is not being returned');
@@ -68,8 +66,8 @@ suite('Functional Tests', function() {
             board: 'Testing',
             report_id: thread_Id,
            }) 
-          .end(function(err, res){  
-            console.log(res.body, res.text)
+          .end(function(err, res) {  
+            console.log(res.body, res.text, thread_Id)
             assert.equal(res.status, 200);
             assert.equal(res.text, 'success');
             done();
@@ -78,23 +76,23 @@ suite('Functional Tests', function() {
     });
     
     suite('DELETE', function() {
-      // test('Redirect to board/thread that we just created using GET', function(done) {
-      //    chai.request(server)
-      //     .delete('/b/Testing/')
-      //     .send({
-      //       board: 'Testing',
-      //      }) 
-      //     .end(function(err, res){  
-      //      //console.log(res)
-      //       assert.equal(res.status, 200);
-      //       assert.equal(res.type, 'text/html');
-      //       assert.typeOf(res.text, 'string', 'response is string');
-      //       done();
-      //     });
-      // });       
+      test('DELETE thread that was created', function(done) {
+         chai.request(server)
+          .delete('/b/Testing/')
+          .send({
+            board: 'Testing',
+           }) 
+          .end(function(err, res){  
+           //console.log(res)
+            assert.equal(res.status, 200);
+            assert.equal(res.type, 'text/html');
+            assert.typeOf(res.text, 'string', 'response is string');
+            done();
+          });
+      });       
     });    
     
-    suite('Delete Board', function() {
+    suite('DELETE BOARD', function() {
       test('Delete the Test Board', function(done) {
          chai.request(server)
           .delete('/api/boards')
