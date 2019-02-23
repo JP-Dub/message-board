@@ -34,8 +34,8 @@ function ClickHandler() {
     console.log('recentThreads', req.body, req.params,)
     Threads
       .findOne({board: req.params.board})
-      .select({'content.reported': 0, 
-               'content.delete_password':0
+      .select({'content.reported'       : 0, 
+               'content.delete_password': 0
               })
       .exec( (err, board) => {
         if(err) throw err;
@@ -146,6 +146,9 @@ function ClickHandler() {
     //console.log('showReplies', req.body, req.params, req.query)
     Threads
       .findOne({board: req.params.board})
+      .select({'content.reported'        : 0, 
+               'content.delete_password' : 0 
+              })
       .exec( (err, view) => {
         if(err) throw err;
         console.log('show', view)

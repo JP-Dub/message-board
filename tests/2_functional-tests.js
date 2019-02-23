@@ -52,8 +52,9 @@ suite('Functional Tests', function() {
             console.log('res.body=', res.body)
             thread_Id = res.body._id;
             assert.equal(res.status, 200);
-            assert.equal(res.body.text, 'Testing...1,2,3');
-            // assert.typeOf(res.text, 'string', 'response is string');
+            assert.equal(res.body[0].text, 'Testing...1,2,3');
+            assert.notExists(res.body.reported, 'reported field is not being returned');
+            assert.notExists(res.body.delete_password, 'delete_password field is not being returned');
             done();
           });
       });        
