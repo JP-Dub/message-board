@@ -48,12 +48,13 @@ app.route('/b/:board/:threadid')
     res.sendFile(process.cwd() + '/views/thread.html');
   });
 
-//Index page (static HTML)
+//Load all pages via iFrame
 app.route('/home')
   .get(function (req, res) {
     res.sendFile(process.cwd() + '/views/index.html');
   });
 
+//Index page (static HTML)
 app.route('/')
   .get(function (req, res) {
     res.sendFile(process.cwd() + '/views/home.html');
