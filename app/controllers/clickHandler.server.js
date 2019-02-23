@@ -161,7 +161,7 @@ function ClickHandler() {
   }; 
 
   this.createReply = (req, res) => {
-    
+    console.log(req.body, req.params)
     Threads
       .findOne({board : req.params.board})
       .exec( (err, update) => {

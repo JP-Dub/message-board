@@ -31,9 +31,9 @@ suite('Functional Tests', function() {
             delete_password: 'test'
            }) 
           .end(function(err, res) {
-            assert.equal( res.status, 200);
-            assert.equal( res.type,   'text/html'); 
-            assert.typeOf(res.text,   'string', 'response is string');
+            assert.equal(          res.status, 200);
+            assert.equal(            res.type, 'text/html'); 
+            assert.typeOf(           res.text, 'string', 'response is string');
             assert.isDefined(res.redirects[0], 'array contains a defined item');
             done();
           });
@@ -50,8 +50,8 @@ suite('Functional Tests', function() {
           .end(function(err, res) {  
             thread_Id = res.body.content[0]._id;
             assert.equal(res.status, 200);
-            assert.equal(    res.body.content[0].text,            'Testing...1,2,3');
-            assert.notExists(res.body.content[0].reported,        'reported field is not being returned');
+            assert.equal(               res.body.content[0].text, 'Testing...1,2,3');
+            assert.notExists(       res.body.content[0].reported, 'reported field is not being returned');
             assert.notExists(res.body.content[0].delete_password, 'delete_password field is not being returned');
             done();
           });
@@ -69,28 +69,56 @@ suite('Functional Tests', function() {
           .end(function(err, res) {  
             console.log(res.body, res.text, thread_Id)
             assert.equal(res.status, 200);
-            assert.equal(res.text, 'success');
+            assert.equal(  res.text, 'success');
             done();
           });
       });       
     });
     
-    suite('DELETE', function() {
-      test('DELETE thread that was created', function(done) {
+    // suite('DELETE', function() {
+    //   test('DELETE thread that was created', function(done) {
+    //      chai.request(server)
+    //       .delete('/b/Testing/')
+    //       .send({
+    //         board: 'Testing',
+    //        }) 
+    //       .end(function(err, res){  
+    //        //console.log(res)
+    
+    //         let replies = res.body.content[0].replies[0];
+    //         assert.equal(res.status, 200);
+    //         assert.equal(               replies.text, 'Testing...1,2,3');
+    //         assert.notExists(       replies.reported, 'reported field is not being returned');
+    //         assert.notExists(replies.delete_password, 'delete_password field is not being returned');
+    //         done();
+    //       });
+    //   });       
+    // });    
+    
+ 
+
+  });
+  
+  suite('API ROUTING FOR /api/replies/:board', function() {
+    
+    suite('POST', function() {
+      test('Create a reply to the Test thread', function(done) {
          chai.request(server)
-          .delete('/b/Testing/')
+          .put('/api/replies/Testing')
           .send({
-            board: 'Testing',
+            thread_id: thread_Id,
+            text: '...testing replies',
+            delete_password: 'replies'
            }) 
-          .end(function(err, res){  
-           //console.log(res)
+          .end(function(err, res) {  
+            console.log(res.body, res.text, thread_Id)
             assert.equal(res.status, 200);
-            assert.equal(res.type, 'text/html');
-            assert.typeOf(res.text, 'string', 'response is string');
+            assert.equal( res.text, 'success');
             done();
           });
-      });       
-    });    
+      });        
+      
+    });
     
     suite('DELETE BOARD', function() {
       test('Delete the Test Board', function(done) {
@@ -104,15 +132,7 @@ suite('Functional Tests', function() {
             done();
           });
       });      
-    });  
-
-  });
-  
-  suite('API ROUTING FOR /api/replies/:board', function() {
-    
-    suite('POST', function() {
-      
-    });
+    });     
     
     suite('GET', function() {
       
