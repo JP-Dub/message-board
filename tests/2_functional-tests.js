@@ -67,7 +67,7 @@ suite('Functional Tests', function() {
             report_id: thread_Id,
            }) 
           .end(function(err, res) {  
-            console.log(res.body, res.text, thread_Id)
+            //console.log(res.body, res.text, thread_Id)
             assert.equal(res.status, 200);
             assert.equal(  res.text, 'success');
             done();
@@ -102,7 +102,7 @@ suite('Functional Tests', function() {
   suite('API ROUTING FOR /api/replies/:board', function() {
     
     suite('POST', function() {
-      test('Create a reply to the Test thread', function(done) {
+      test('Create a reply to the `Testing` thread', function(done) {
          chai.request(server)
           .put('/api/replies/Testing')
           .send({
@@ -111,9 +111,11 @@ suite('Functional Tests', function() {
             delete_password: 'replies'
            }) 
           .end(function(err, res) {  
-            console.log(res.body, res.text, thread_Id)
-            assert.equal(res.status, 200);
-            assert.equal( res.text, 'success');
+            console.log(res.body, thread_Id, res.redirects)
+            assert.equal(          res.status, 200);
+            assert.equal(            res.type, 'text/html'); 
+            assert.typeOf(           res.text, 'string', 'response is string');
+            assert.isDefined(res.redirects[0], 'array contains a defined item');
             done();
           });
       });        

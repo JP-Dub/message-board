@@ -31,7 +31,7 @@ function ClickHandler() {
   
   
   this.recentThreads = (req, res) => {
-    console.log('recentThreads', req.body, req.params,)
+    //console.log('recentThreads', req.body, req.params,)
     Threads
       .findOne({board: req.params.board})
       .select({'content.reported'       : 0, 
@@ -39,7 +39,7 @@ function ClickHandler() {
               })
       .exec( (err, board) => {
         if(err) throw err;
-        console.log(board)
+        //console.log(board)
         if(board.content.length > 9) board.content.splice(10);
         board.content.forEach(arr => {
          
@@ -88,7 +88,7 @@ function ClickHandler() {
   };
   
   this.reportThreads = (req, res) => {
-   console.log('reportThreads', req.body, req.params)
+   //console.log('reportThreads', req.body, req.params)
     Threads
       .findOne({board: req.params.board })
       .exec((err, board) => {
@@ -153,7 +153,8 @@ function ClickHandler() {
         if(err) throw err;
         console.log('show', view)
         view.content.forEach(replies => {
-          if(replies._id == req.query.thread_id) {           
+          if(replies._id == req.query.thread_id) {  
+            console.log('replies', replies)
             res.json(replies);
           };
         });
@@ -184,8 +185,9 @@ function ClickHandler() {
       
         update.save(err => {
           if(err) throw err;
-          return res.redirect('/b/' + req.params.board + '/' + req.body.thread_id);
         });    
+      
+        return res.redirect('/b/' + req.params.board + '/' + req.body.thread_id);
     });
   };   
   
