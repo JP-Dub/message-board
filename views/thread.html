@@ -25,7 +25,9 @@
     <script>
       $(function() {
         var currentURL = window.location.pathname.slice(3);
+        console.log('cu', currentURL)
         currentURL = currentURL.split('/');
+        console.log('cu', currentURL)
         
         var url = "/api/replies/"+currentURL[0];
         $('#threadTitle').text(window.location.pathname.split('%20').join(' '));
@@ -103,13 +105,15 @@
             type: "DELETE",
             url: url,
             data: $(this).serialize(),
-            success: function(data) { alert(data) }
+            success: function(data) { 
+              alert(data)
+              window.location.href = "https://message-board-anon.glitch.me/b/" + currentUrl[0] + "/";
+            }
           });
           e.preventDefault();
         });        
         $('#boardDisplay').on('submit','#deleteReply', function(e) {
           var url = "/api/replies/"+currentURL[0];
-          //var page = $('#threadTitle').val();
           $.ajax({
             type: "DELETE",
             url: url,
