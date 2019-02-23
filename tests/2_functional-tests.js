@@ -31,9 +31,9 @@ suite('Functional Tests', function() {
             delete_password: 'test'
            }) 
           .end(function(err, res){
-            assert.equal(res.status, 200);
-            assert.equal(res.type, 'text/html'); 
-            assert.typeOf(res.text, 'string', 'response is string');
+            assert.equal( res.status, 200);
+            assert.equal( res.type,   'text/html'); 
+            assert.typeOf(res.text,   'string', 'response is string');
             assert.isDefined(res.redirects[0], 'array contains a defined item');
             done();
           });
@@ -50,6 +50,7 @@ suite('Functional Tests', function() {
            }) 
           .end(function(err, res){ 
             thread_Id = res.body._id;
+           
             assert.equal(res.status, 200);
             assert.equal(    res.body.content[0].text,            'Testing...1,2,3');
             assert.notExists(res.body.content[0].reported,        'reported field is not being returned');
@@ -60,16 +61,17 @@ suite('Functional Tests', function() {
     });      
     
     suite('PUT', function() {
-      test('Test "Report" thread button function', function(done) {
+      test('Test button function to report a thread', function(done) {
          chai.request(server)
-          .put('api/threads/Testing')
+          .put('/api/threads/Testing')
           .send({
+            board: 'Testing',
             report_id: thread_Id,
            }) 
           .end(function(err, res){  
-            //console.log(res)
+            console.log(res.body, res.text)
             assert.equal(res.status, 200);
-            //assert.typeOf(res.text, 'string', 'response is string');
+            assert.equal(res.text, 'success');
             done();
           });
       });       

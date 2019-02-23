@@ -190,7 +190,7 @@ function ClickHandler() {
   };   
   
   this.reportReply = (req, res) => {
-    
+    console.log(req.body, req.params)
     Threads
       .findOne({board: req.params.board })
       .exec((err, board) => {
