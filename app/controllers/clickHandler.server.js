@@ -143,7 +143,7 @@ function ClickHandler() {
   
   
   this.showReplies = (req, res) => {
-    //console.log('showReplies', req.body, req.params, req.query)
+    console.log('showReplies', req.body, req.params, req.query)
     Threads
       .findOne({board: req.params.board})
       .select({'content.reported'        : 0, 
@@ -193,7 +193,7 @@ function ClickHandler() {
   };   
   
   this.reportReply = (req, res) => {
-    console.log(req.body, req.params)
+    console.log('Report Reply', req.body, req.params)
     Threads
       .findOne({board: req.params.board })
       .exec((err, board) => {

@@ -65,7 +65,7 @@ suite('Functional Tests', function() {
             report_id: thread_Id,
            }) 
           .end(function(err, res) {  
-            //console.log(res.body, res.text, thread_Id)
+            console.log('thread PUT request= ', res.text, thread_Id)
             assert.equal(res.status, 200);
             assert.equal(  res.text, 'success');
             done();
@@ -102,20 +102,38 @@ suite('Functional Tests', function() {
     suite('POST', function() {
       test('Create a reply to the `Testing` thread', function(done) {
          chai.request(server)
-          .put('/api/replies/Testing')
+          .post('/api/replies/Testing/' + thread_Id)
           .send({
             thread_id: thread_Id,
             text: '...testing replies',
             delete_password: 'replies'
            }) 
           .end(function(err, res) {  
-            console.log(res.body, thread_Id, res.redirects)
+            //console.log('POST request to reply', res.body, thread_Id, res.redirects, res.header)
             assert.equal(          res.status, 200);
             assert.isDefined(res.redirects[0], 'array contains a defined item');
             done();
           });
       });        
       
+    });  
+    
+    suite('GET', function() {
+      test('GET the full thread and reveal all replies', function(done) {
+         chai.request(server)
+          .get('/api/replies/Testing')
+          .send({
+            thread_id: thread_Id,
+            text: '...testing replies',
+            delete_password: 'replies'
+           }) 
+          .end(function(err, res) {  
+            //console.log('POST request to reply', res.body, thread_Id, res.redirects, res.header)
+            assert.equal(          res.status, 200);
+            assert.isDefined(res.redirects[0], 'array contains a defined item');
+            done();
+          });
+      });      
     });
     
     suite('DELETE BOARD', function() {
@@ -130,11 +148,7 @@ suite('Functional Tests', function() {
             done();
           });
       });      
-    });     
-    
-    suite('GET', function() {
-      
-    });
+    });       
     
     suite('PUT', function() {
       
