@@ -32,8 +32,6 @@ suite('Functional Tests', function() {
            }) 
           .end(function(err, res) {
             assert.equal(          res.status, 200);
-            assert.equal(            res.type, 'text/html'); 
-            assert.typeOf(           res.text, 'string', 'response is string');
             assert.isDefined(res.redirects[0], 'array contains a defined item');
             done();
           });
@@ -113,8 +111,6 @@ suite('Functional Tests', function() {
           .end(function(err, res) {  
             console.log(res.body, thread_Id, res.redirects)
             assert.equal(          res.status, 200);
-            assert.equal(            res.type, 'text/html'); 
-            assert.typeOf(           res.text, 'string', 'response is string');
             assert.isDefined(res.redirects[0], 'array contains a defined item');
             done();
           });

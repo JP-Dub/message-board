@@ -162,7 +162,7 @@ function ClickHandler() {
   }; 
 
   this.createReply = (req, res) => {
-    console.log(req.body, req.params)
+    console.log('create reply', req.body, req.params)
     Threads
       .findOne({board : req.params.board})
       .exec( (err, update) => {
@@ -186,9 +186,10 @@ function ClickHandler() {
         update.save(err => {
           if(err) throw err;
         });    
-      
-        return res.redirect('/b/' + req.params.board + '/' + req.body.thread_id);
+    
     });
+    
+    return res.redirect('/b/' + req.params.board + '/' + req.body.thread_id);
   };   
   
   this.reportReply = (req, res) => {
