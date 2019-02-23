@@ -25,9 +25,7 @@
     <script>
       $(function() {
         var currentURL = window.location.pathname.slice(3);
-        console.log('cu', currentURL)
         currentURL = currentURL.split('/');
-        console.log('cu', currentURL)
         
         var url = "/api/replies/"+currentURL[0];
         $('#threadTitle').text(window.location.pathname.split('%20').join(' '));
