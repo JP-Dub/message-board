@@ -41,7 +41,7 @@ suite('Functional Tests', function() {
       test('Redirect to board/thread that we just created using GET', function(done) {
          chai.request(server)
           .get('/b/Testing/')
-          .set('content-type', 'application/json')
+          .set('accept', 'json')
           .send({
             board: 'Testing',
            }) 
