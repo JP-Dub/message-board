@@ -18,9 +18,10 @@ suite('Functional Tests', function() {
   suite('API ROUTING FOR /api/threads/:board', function() {
     
     suite('POST', function() {
-      test('Start a new board/board using POST', function(done) {
+      test('Start a new board/thread using POST', function(done) {
          chai.request(server)
           .post('/api/threads/Testing')
+          .type('form')
           .send({
             board: 'Testing',
             text : 'Testing...1,2,3',
@@ -40,7 +41,7 @@ suite('Functional Tests', function() {
       test('Redirect to board/thread that we just created using GET', function(done) {
          chai.request(server)
           .get('/b/Testing/')
-          .set('Content-Type', 'application/json')
+          .set('content-type', 'application/json')
           .send({
             board: 'Testing',
            }) 
