@@ -107,7 +107,7 @@
             data: $(this).serialize(),
             success: function(data) { 
               alert(data)
-              window.location.href = "https://message-board-anon.glitch.me/b/" + currentURL[0] + "/";
+              if(data === 'success') window.location.href = "https://message-board-anon.glitch.me/b/" + currentURL[0] + "/";
             }
           });
           e.preventDefault();
@@ -120,7 +120,7 @@
             data: $(this).serialize(),
             success: function(data) { 
               alert(data);
-              window.location.reload(true);
+              if(data === 'success') window.location.reload(true);
             }
           });
           e.preventDefault();

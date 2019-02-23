@@ -118,7 +118,7 @@
             data: $(this).serialize(),
             success: function(data) { 
               alert(data)
-              window.location.reload(true);
+              if(data === 'success') window.location.reload(true);
             }
           });
           e.preventDefault();
@@ -131,7 +131,7 @@
             data: $(this).serialize(),
             success: function(data) { 
               alert(data)
-              window.location.reload(true);
+              if(data === 'success') window.location.reload(true);
             }
           });
           e.preventDefault();
