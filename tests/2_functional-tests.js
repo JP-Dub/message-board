@@ -42,9 +42,6 @@ suite('Functional Tests', function() {
       test('Redirect to board/thread that we just created using GET', function(done) {
          chai.request(server)
           .get('/api/threads/Testing')
-          // .send({
-          //   board: 'Testing',
-          //  }) 
           .end(function(err, res) {  
             thread_Id = res.body.content[0]._id;
             assert.equal(res.status, 200);
@@ -65,13 +62,14 @@ suite('Functional Tests', function() {
             report_id: thread_Id,
            }) 
           .end(function(err, res) {  
-            //console.log('thread PUT request= ', res.text, thread_Id)
             assert.equal(res.status, 200);
             assert.equal(  res.text, 'success');
             done();
           });
       });       
     });
+    
+    // Can't run the following or /api/replies/:board will not be able to function
     
     // suite('DELETE', function() {
     //   test('DELETE thread that was created', function(done) {
@@ -109,7 +107,6 @@ suite('Functional Tests', function() {
             delete_password: 'replies'
            }) 
           .end(function(err, res) {  
-            //console.log('POST request to reply', res.body, thread_Id, res.redirects, res.header)
             assert.equal(          res.status, 200);
             assert.isDefined(res.redirects[0], 'array contains a defined item');
             done();
@@ -127,7 +124,6 @@ suite('Functional Tests', function() {
            }) 
           .end(function(err, res) { 
             reply_Id = res.body.replies[0]._id;
-            //console.log('GET request to replies', res.body)
             assert.equal(res.status, 200);
             assert.equal(               res.body.replies[0].text, '...testing replies');
             assert.notExists(       res.body.replies[0].reported, 'reported field is not being returned');
@@ -146,7 +142,6 @@ suite('Functional Tests', function() {
             reply_id : reply_Id,
            }) 
           .end(function(err, res) {  
-            //console.log('thread PUT request= ', res.text, thread_Id)
             assert.equal(res.status, 200);
             assert.equal(  res.text, 'success');
             done();
@@ -164,7 +159,6 @@ suite('Functional Tests', function() {
             delete_password: 'replies'
            }) 
           .end(function(err, res){  
-           //console.log(res)
             assert.equal(res.status, 200);
             assert.equal(res.text, 'success');
             done();
@@ -173,22 +167,23 @@ suite('Functional Tests', function() {
     });
     
     suite('DELETE', function() {
-      test('DELETE thread that was created', function(done) {
+      test('DELETE thread that was created using /api/threads/:board', function(done) {
          chai.request(server)
           .delete('/api/threads/Testing/')
           .send({
-            board: 'Testing',
+            thread_id      : thread_Id,
+            delete_password: 'test'
            }) 
           .end(function(err, res){  
             assert.equal(res.status, 200);
-            assert.equal(res.text, 'success');
+            assert.equal(  res.text, 'success');
             done();
           });
       });       
     });      
     
     suite('DELETE BOARD', function() {
-      test('Delete the Test Board', function(done) {
+      test('Delete the `Testing` Board', function(done) {
          chai.request(server)
           .delete('/api/boards')
           .send({

@@ -31,7 +31,7 @@ function ClickHandler() {
   
   
   this.recentThreads = (req, res) => {
-    //console.log('recentThreads', req.body, req.params,)
+    
     Threads
       .findOne({board: req.params.board})
       .select({'content.reported'       : 0, 
@@ -39,7 +39,7 @@ function ClickHandler() {
               })
       .exec( (err, board) => {
         if(err) throw err;
-        //console.log(board)
+        
         if(board.content.length > 9) board.content.splice(10);
         board.content.forEach(arr => {
          
@@ -51,12 +51,11 @@ function ClickHandler() {
   };
 
   this.createThreads = (req, res) => {
-    //console.log('createThreads', req.body)
+    
     Threads
       .findOne({board: req.body.board})
       .exec( (err, threads) => {
         if(err) throw err;
-        //console.log('threads', threads)
 
         let board = threads;
         let num   = !threads ? 1 
@@ -88,17 +87,17 @@ function ClickHandler() {
   };
   
   this.reportThreads = (req, res) => {
-   console.log('Report Thread', req.body, req.params)
+ 
     Threads
       .findOne({board: req.params.board })
       .exec((err, board) => {
         if(err) throw err;
-        //console.log('board', board);
+    
         let response = 'error';
         board.content.forEach(reply => {
 
           if(reply.id == req.body.report_id) {
-            //console.log('reply', reply)
+         
             if(reply.reported === true) return response = 'This thread has already been reported!';
             reply.reported = true;
 
@@ -114,17 +113,17 @@ function ClickHandler() {
   };
   
   this.deleteThreads = (req, res) => {
-    //console.log('deleteThreads', req.body, req.params)
+    
     Threads
       .findOne({board: req.params.board})
       .exec((err, board) => {
       if(err) throw err;
-      //console.log(thread.content)
+      
       let response = 'incorrect password';
       board.content.forEach( (thread, i) => {
         if(thread._id == req.body.thread_id 
         && thread.delete_password === req.body.delete_password) {  
-          //console.log('success!');
+        
           board.content.splice(i, 1);          
           
           board.save(err => {
@@ -143,7 +142,7 @@ function ClickHandler() {
   
   
   this.showReplies = (req, res) => {
-    console.log('showReplies', req.body, req.params, req.query)
+   
     Threads
       .findOne({board: req.params.board})
       .select({'content.reported'               : 0, 
@@ -153,10 +152,9 @@ function ClickHandler() {
               })
       .exec( (err, view) => {
         if(err) throw err;
-        console.log('show', view)
+       
         view.content.forEach(replies => {
           if(replies._id == req.query.thread_id) {  
-            console.log('replies', replies)
             res.json(replies);
           };
         });
@@ -164,12 +162,12 @@ function ClickHandler() {
   }; 
 
   this.createReply = (req, res) => {
-    //console.log('create reply', req.body, req.params)
+    
     Threads
       .findOne({board : req.params.board})
       .exec( (err, update) => {
         if(err) throw err;
-        //console.log(update.content)
+  
         update.content.forEach(content => {
           
           if(content._id == req.body.thread_id) {          
@@ -195,7 +193,7 @@ function ClickHandler() {
   };   
   
   this.reportReply = (req, res) => {
-    console.log('Report Reply', req.body, req.params)
+    
     Threads
       .findOne({board: req.params.board })
       .exec((err, board) => {
@@ -206,7 +204,7 @@ function ClickHandler() {
           
           if(reply.id == req.body.thread_id) {        
             reply.replies.forEach(val => {
-              console.log('val' , val)
+              
               if(val._id == req.body.reply_id) {
                 if(val.reported === true) return response = 'This reply has already been reported!';             
                 val.reported = true;
