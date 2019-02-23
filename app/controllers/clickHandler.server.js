@@ -31,7 +31,7 @@ function ClickHandler() {
   
   
   this.recentThreads = (req, res) => {
-    console.log('recentThreads', req.body, req.params, req.query)
+    console.log('recentThreads', req.body, req.params,)
     Threads
       .findOne({board: req.params.board})
       .exec( (err, board) => {
