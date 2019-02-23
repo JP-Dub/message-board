@@ -49,26 +49,25 @@ suite('Functional Tests', function() {
             board: 'Testing',
            }) 
           .end(function(err, res){ 
-            console.log('res.body=', res.body)
             thread_Id = res.body._id;
             assert.equal(res.status, 200);
-            assert.equal(res.body[0].text, 'Testing...1,2,3');
-            assert.notExists(res.body.reported, 'reported field is not being returned');
-            assert.notExists(res.body.delete_password, 'delete_password field is not being returned');
+            assert.equal(    res.body.content[0].text,            'Testing...1,2,3');
+            assert.notExists(res.body.content[0].reported,        'reported field is not being returned');
+            assert.notExists(res.body.content[0].delete_password, 'delete_password field is not being returned');
             done();
           });
       });        
     });      
     
     suite('PUT', function() {
-      test('Test "report" button function on a thread', function(done) {
+      test('Test "Report" thread button function', function(done) {
          chai.request(server)
-          .put('api/threads/Testing/')
+          .put('api/threads/Testing')
           .send({
             report_id: thread_Id,
            }) 
           .end(function(err, res){  
-           //console.log(res)
+            //console.log(res)
             assert.equal(res.status, 200);
             //assert.typeOf(res.text, 'string', 'response is string');
             done();
