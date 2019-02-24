@@ -40,9 +40,10 @@ function ClickHandler() {
       .exec( (err, board) => {
         if(err) throw err;
         
+        // maintain thread count to 10 or less
         if(board.content.length > 9) board.content.splice(10);
         board.content.forEach(arr => {
-         
+          // maintain reply count to 3 or less
           arr.replies.splice(3);
         });
       
@@ -82,7 +83,7 @@ function ClickHandler() {
         });
       
     });
-
+    // redirect to .recentThreads
     return res.redirect('/b/' + req.body.board +'/')
   };
   
@@ -189,6 +190,7 @@ function ClickHandler() {
     
     });
     
+    // redirect to .showReplies
     return res.redirect('/b/' + req.params.board + '/' + req.body.thread_id);
   };   
   
@@ -218,6 +220,7 @@ function ClickHandler() {
             });
           };
         });
+      
         return res.send(response);
     });
   };     

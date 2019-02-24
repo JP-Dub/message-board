@@ -17,10 +17,8 @@ var app = express();
 app.use('/public', express.static(process.cwd() + '/public'));
 
 app.use(cors({origin: '*'})); //For FCC testing purposes only
-//app.use(helmet());
-// app.use(helmet.dnsPrefetchControl());
-// app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 
+//Security settings by Helmet.js
 app.use(helmet({
   referrerPolicy : {
     policy : 'same-origin'
@@ -32,10 +30,6 @@ app.use(helmet({
 
 mongoose.connect(process.env.MONGO_URI, {useNewUrlParser : true});
 mongoose.Promise = global.Promise;
-
-// app.use('/public', express.static(process.cwd() + '/public'));
-
-// app.use(cors({origin: '*'})); //For FCC testing purposes only
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

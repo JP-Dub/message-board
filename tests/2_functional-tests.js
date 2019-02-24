@@ -69,7 +69,7 @@ suite('Functional Tests', function() {
       });       
     });
     
-    // Can't run the following or /api/replies/:board will not be able to function
+    // Can't run the following for /api/replies/:board will not be able to function
     
     // suite('DELETE', function() {
     //   test('DELETE thread that was created', function(done) {
